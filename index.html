@@ -114,7 +114,6 @@
         function updateCountdown(){const n=new Date(),w=new Date(n.toLocaleString('en-US',{timeZone:'Europe/Warsaw'})),d=w-startDate;if(d<0){const r=Math.abs(d),D=Math.floor(r/864e5),H=Math.floor((r%864e5)/36e5);countdownEl.innerHTML=`через ${D} дн ${H} ч <span class="highlight">02.08.26</span>`}else{const D=Math.floor(d/864e5),H=Math.floor((d%864e5)/36e5),M=Math.floor((d%36e5)/6e4);countdownEl.innerHTML=`${D} дн ${H} ч ${M} мин <span class="highlight">02.08.26</span>`}}
         updateCountdown();setInterval(updateCountdown,6e4);
 
-        // 50 фраз для неоновой строки
         const phrases=[
             'ты пахнешь счастьем','твой смех — мой любимый звук','даже тишина с тобой — музыка',
             'ты снишься мне чаще, чем я сплю','с тобой мир цветной','моё сердце бьётся в ритме твоего имени',
@@ -122,43 +121,34 @@
             'смотрю на тебя и забываю дышать','твои глаза — мой дом','ты — лучшее, что со мной случилось',
             'твой голос лечит','обожаю как ты улыбаешься','ты моё солнце даже в дождь',
             'думаю о тебе — и уже хорошо','ты — мой покой','каждое утро начинается с мысли о тебе',
-            'ты снишься мне даже днём','твоё имя — моя любимая мелодия','ты — причина моего счастья',
-            'с тобой я настоящий','твоя нежность — моя сила','ты как тёплый свет в темноте',
-            'обожаю твои глаза','ты — моя вселенная','твой шёпот — моя любимая песня',
+            'твоё имя — моя любимая мелодия','ты — причина моего счастья','с тобой я настоящий',
+            'твоя нежность — моя сила','ты как тёплый свет в темноте','ты — моя вселенная',
             'ты — мой самый красивый рассвет','без тебя мир чёрно-белый','ты делаешь меня лучше',
-            'твои объятия — моё убежище','ты — моя самая тёплая мысль','ты пахнешь небом',
-            'твой взгляд — моя зависимость','ты — стих, который я не дописал','ты моё вдохновение',
-            'твоё счастье — моя цель','ты как звёзды — всегда рядом, даже когда не видно',
-            'ты — мой самый любимый человек','ты та, кого я искал','твоя душа — свет',
-            'ты снишься мне в каждом сне','ты — моя бесконечность','твой смех лечит',
-            'ты как луна — красивая и загадочная','я тону в твоих глазах','ты — моя тихая гавань',
-            'ты — причина моих улыбок','ты самая красивая на свете','твои руки — моё тепло'
+            'твои объятия — моё убежище','ты пахнешь небом','ты — моё вдохновение',
+            'ты как звёзды — всегда рядом','твоя душа — свет','ты — моя бесконечность',
+            'твой смех лечит','я тону в твоих глазах','ты — моя тихая гавань',
+            'ты — причина моих улыбок','твои руки — моё тепло','ты — мой самый любимый человек'
         ];
         const phraseEl=document.getElementById('randomPhraseTop');let pi=Math.floor(Math.random()*phrases.length);phraseEl.textContent=phrases[pi];
         setInterval(()=>{phraseEl.style.opacity='0';setTimeout(()=>{pi=(pi+1)%phrases.length;phraseEl.textContent=phrases[pi];phraseEl.style.opacity='1'},500)},7e3);
 
-        // 30 фраз для открытки
+        document.getElementById('extraPhrase').textContent=[
+            'ты моё солнце','с тобой даже понедельник — выходной','думаю о тебе чаще, чем дышу',
+            'ты — лучшее, что со мной случилось','твой голос — мой покой','обожаю твои глаза',
+            'ты — мой самый красивый сон','с тобой время летит','ты моя слабость и сила',
+            'ты — мой кислород','ты — моя самая тёплая мысль','ты — моя тихая радость',
+            'ты — моя любимая улыбка','ты моё всё и даже больше','ты — моя вторая половинка'
+        ][Math.floor(Math.random()*15)];
+
         const cardPhrases=[
             'люблю тебя','ты моё всё','скучаю','ты прекрасна','моя нежная',
             'самая родная','будь моей','ты — чудо','обожаю тебя','моя девочка',
             'ты — мой мир','навсегда твой','ты — мой свет','душа моя','ты — космос',
             'ты — моя вечность','ты — моя мечта','ты — моя любовь','ты — ангел',
             'ты — мой покой','ты — моя радость','ты — моя жизнь','ты — моя судьба',
-            'ты — моя нежность','ты — моя страсть','ты — моя муза','ты — моя сказка',
-            'ты — моя бесконечность','ты — моя тишина','ты — моя весна'
+            'ты — моя нежность','ты — моя муза','ты — моя сказка','ты — моя весна'
         ];let cardOpened=false;
         function openPostcard(){playRustleSound();const c=document.getElementById('postcard');if(!cardOpened){c.querySelector('.hidden-message').textContent=cardPhrases[Math.floor(Math.random()*cardPhrases.length)];cardOpened=true}c.classList.toggle('opened');if(!c.classList.contains('opened'))cardOpened=false}
-
-        // 20 фраз для меню
-        document.getElementById('extraPhrase').textContent=[
-            'ты моё солнце','с тобой даже понедельник — выходной','думаю о тебе чаще, чем дышу',
-            'ты — лучшее, что со мной случилось','твой голос — мой покой','обожаю твои глаза',
-            'ты — мой самый красивый сон','с тобой время летит','ты моя слабость и сила',
-            'ты — мой любимый беспорядок','ты — мой кислород','ты снишься мне каждую ночь',
-            'ты — моя самая тёплая мысль','твои руки — мой дом','ты — моя тихая радость',
-            'ты — моя бесконечная нежность','ты — мой самый родной человек','ты моё всё и даже больше',
-            'ты — моя любимая улыбка','ты — моя вторая половинка'
-        ][Math.floor(Math.random()*20)];
 
         const gh=document.getElementById('globalHearts');
         function createHeart(){const h=document.createElement('span');h.className='floating-heart';h.textContent='💕';h.style.left=Math.random()*100+'%';h.style.fontSize=(Math.random()*18+12)+'px';h.style.animationDuration=(Math.random()*10+10)+'s';gh.appendChild(h);setTimeout(()=>h.remove(),2e4)}
@@ -182,4 +172,13 @@
 
         const vs=document.getElementById('videoSection');new IntersectionObserver(e=>{e.forEach(e=>{if(e.intersectionRatio<0.5)v.classList.add('dimmed');else v.classList.remove('dimmed')})},{threshold:[0,0.5,1]}).observe(vs);
 
-        function updateMoonColor(){const n=new Date(),wh=parseInt(n.toLocaleString('en-US',{timeZone:'Europe/Warsaw',hour:'2-digit',hour12:false})),m=document.getElementById('moon'),mc=document.getElementById('moonCircle');if(wh>=6&&wh<20){m.classList.add('day');m.classList.remove('night');mc.setAttribute('fill','url(#moonGlowDay)')}else{m.classList.add('night');m.classList.remove('day');mc.setAttribute('fill','url
+        function updateMoonColor(){const n=new Date(),wh=parseInt(n.toLocaleString('en-US',{timeZone:'Europe/Warsaw',hour:'2-digit',hour12:false})),m=document.getElementById('moon'),mc=document.getElementById('moonCircle');if(wh>=6&&wh<20){m.classList.add('day');m.classList.remove('night');mc.setAttribute('fill','url(#moonGlowDay)')}else{m.classList.add('night');m.classList.remove('day');mc.setAttribute('fill','url(#moonGlowNight)')}}
+        updateMoonColor();setInterval(updateMoonColor,6e4);
+
+        const moonEl=document.getElementById('moon');if(window.DeviceOrientationEvent){window.addEventListener('deviceorientation',function(e){if(e.gamma!==null&&e.beta!==null){moonEl.style.transform=`translate(${Math.max(-8,Math.min(8,e.gamma/5))}px,${Math.max(-8,Math.min(8,(e.beta-45)/5))}px)`}})}
+
+        const moonMsg=document.getElementById('moonMessage');let mt;
+        moonEl.addEventListener('touchstart',function(e){e.stopPropagation();mt=setTimeout(()=>{moonMsg.classList.add('show')},600)});
+        moonEl.addEventListener('touchend',function(){clearTimeout(mt);setTimeout(()=>moonMsg.classList.remove('show'),2e3)});
+        moonEl.addEventListener('mousedown',function(e){e.stopPropagation();mt=setTimeout(()=>{moonMsg.classList.add('show')},600)});
+        moonEl.addEventListener('mouseup',function
