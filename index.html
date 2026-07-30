@@ -26,18 +26,15 @@
         .shooting-star .head{width:6px;height:6px;background:#fff;border-radius:50%;box-shadow:0 0 10px 3px rgba(255,255,255,0.8),0 0 20px 6px rgba(255,200,220,0.5);flex-shrink:0}
         .tap-heart{position:fixed;pointer-events:none;z-index:100;font-size:40px;animation:tapHeartAnim 1s ease forwards;filter:drop-shadow(0 0 8px rgba(255,153,187,0.5))}
         @keyframes tapHeartAnim{0%{opacity:1;transform:translate(-50%,-50%) scale(0.3)}30%{opacity:1;transform:translate(-50%,-50%) scale(1.3)}100%{opacity:0;transform:translate(-50%,-50%) scale(1) translateY(-80px)}}
-        .moon-emoji{position:absolute;top:-8px;right:-8px;font-size:12px;z-index:4;pointer-events:none;transition:opacity 0.5s ease}
         .moon{position:absolute;top:16px;right:18px;z-index:3;transition:transform 0.1s ease;cursor:pointer;pointer-events:auto}
         .moon svg{width:32px;height:32px;transition:filter 3s ease}
         .moon.day svg{filter:drop-shadow(0 0 10px rgba(255,240,200,0.8)) drop-shadow(0 0 20px rgba(255,220,150,0.5))}
         .moon.night svg{filter:drop-shadow(0 0 10px rgba(200,210,255,0.7)) drop-shadow(0 0 20px rgba(180,190,240,0.4))}
-        @media screen and (max-width:480px){.moon{top:11px;right:14px}.moon svg{width:26px;height:26px}.moon-emoji{top:-6px;right:-6px;font-size:10px}}
+        @media screen and (max-width:480px){.moon{top:11px;right:14px}.moon svg{width:26px;height:26px}}
         .moon-message{position:absolute;top:50px;right:0;color:#ffd6e0;font-size:10px;font-family:'Georgia','Times New Roman',serif;font-style:italic;background:rgba(0,0,0,0.75);padding:6px 10px;border-radius:10px;white-space:nowrap;opacity:0;pointer-events:none;transition:opacity 0.4s ease;z-index:4}
         .moon-message::before{content:'';position:absolute;top:-12px;right:14px;width:20px;height:12px;border-left:10px solid transparent;border-right:10px solid transparent;border-bottom:10px solid rgba(0,0,0,0.75)}
         .moon-message.show{opacity:1}
         @media screen and (max-width:480px){.moon-message{top:42px;font-size:9px;padding:5px 8px}.moon-message::before{top:-10px;right:11px;border-bottom-width:8px}}
-        .moon-spark{position:fixed;pointer-events:none;z-index:56;font-size:10px;animation:sparkBurst 0.8s ease forwards}
-        @keyframes sparkBurst{0%{opacity:1;transform:translate(0,0) scale(1)}100%{opacity:0;transform:translate(var(--sx),var(--sy)) scale(0)}}
         .top-center{position:absolute;top:14px;left:50%;transform:translateX(-50%);z-index:3;display:flex;flex-direction:column;align-items:center;gap:2px;pointer-events:none}
         .top-center .happiness{color:#ff99bb;font-size:16px;font-family:'Great Vibes','Pacifico','Brush Script MT',cursive;text-shadow:0 0 10px rgba(255,153,187,0.4);animation:fadeInName 2s ease;letter-spacing:1px}
         .top-center .countdown{color:#e0d5c8;font-size:10px;font-family:'Georgia','Times New Roman',serif;font-style:italic;animation:fadeInName 2.5s ease;white-space:nowrap}
@@ -45,9 +42,7 @@
         .top-center .random-phrase-top{font-size:10px;font-family:'Georgia','Times New Roman',serif;font-style:italic;animation:fadeInName 3s ease,breatheNeon 3s ease-in-out infinite;margin-top:1px;background:linear-gradient(135deg,#ff99bb 0%,#cc88ff 50%,#ff99bb 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;filter:drop-shadow(0 0 8px rgba(255,153,187,0.6)) drop-shadow(0 0 15px rgba(200,140,255,0.4));transition:opacity 0.5s ease}
         @keyframes breatheNeon{0%,100%{opacity:0.7;filter:drop-shadow(0 0 6px rgba(255,153,187,0.5)) drop-shadow(0 0 12px rgba(200,140,255,0.3))}50%{opacity:1;filter:drop-shadow(0 0 12px rgba(255,153,187,0.8)) drop-shadow(0 0 20px rgba(200,140,255,0.5))}}
         @media screen and (max-width:480px){.top-center{top:10px;gap:1px}.top-center .happiness{font-size:13px}.top-center .countdown{font-size:9px}.top-center .random-phrase-top{font-size:9px}}
-        .greeting{position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);z-index:80;color:#ffd6e0;font-family:'Great Vibes','Pacifico','Brush Script MT',cursive;font-size:36px;text-shadow:0 0 20px rgba(255,153,187,0.6);pointer-events:none;opacity:0;transition:opacity 1s ease}
-        .greeting.show{opacity:1}
-        @media screen and (max-width:480px){.greeting{font-size:28px}}
+        @keyframes fadeInName{from{opacity:0;transform:translateY(-10px)}to{opacity:1;transform:translateY(0)}}
         .menu-btn{position:absolute;top:14px;left:14px;z-index:20;background:rgba(0,0,0,0.5);border:none;width:40px;height:36px;display:flex;flex-direction:column;justify-content:space-between;padding:8px 8px;cursor:pointer;border-radius:6px;backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px)}
         .menu-btn span{display:block;width:100%;height:2.5px;background:#fff;border-radius:2px;transition:0.3s}
         .menu-btn.open span:nth-child(1){transform:translateY(7px) rotate(45deg)}.menu-btn.open span:nth-child(2){opacity:0}.menu-btn.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
@@ -71,7 +66,6 @@
         .side-panel .postcard.opened .hidden-message{display:block}
         .side-panel .postcard.opened .envelope{display:none}
         .side-panel .postcard.opened .open-text{display:none}
-        @keyframes fadeInName{from{opacity:0;transform:translateY(-10px)}to{opacity:1;transform:translateY(0)}}
         .overlay{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.5);z-index:14;display:none}
         .overlay.show{display:block}
         .play-overlay{position:absolute;top:0;left:0;width:100%;height:100%;display:flex;justify-content:center;align-items:center;z-index:5;background:rgba(0,0,0,0.7);transition:opacity 0.5s ease}
@@ -98,7 +92,6 @@
     <canvas id="drawCanvas"></canvas>
     <div class="global-hearts" id="globalHearts"></div>
     <div class="overlay" id="overlay"></div>
-    <div class="greeting" id="greeting">Привет, Карина</div>
     <div class="side-panel" id="sidePanel">
         <a href="https://www.instagram.com/kkarinova_/" target="_blank" class="insta-link"><svg class="insta-icon-svg" viewBox="0 0 24 24" fill="none"><rect x="2" y="2" width="20" height="20" rx="5" stroke="url(#igGrad)" stroke-width="1.8"/><circle cx="12" cy="12" r="4.5" stroke="url(#igGrad)" stroke-width="1.8"/><circle cx="17.5" cy="6.5" r="1.1" fill="url(#igGrad)"/><defs><linearGradient id="igGrad" x1="0" y1="24" x2="24" y2="0" gradientUnits="userSpaceOnUse"><stop stop-color="#f9ce34"/><stop offset="0.3" stop-color="#ee2a7b"/><stop offset="0.7" stop-color="#6228d7"/></linearGradient></defs></svg>@kkarinova_</a>
         <div class="divider"><span class="infinity">∞</span><span class="date-heart">02.08.26 💕</span></div>
@@ -109,7 +102,7 @@
     </div>
     <div class="video-section" id="videoSection">
         <div class="video-wrapper">
-            <div class="moon" id="moon"><svg viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg"><defs><radialGradient id="moonGlowDay" cx="60%" cy="30%" r="60%"><stop offset="0%" stop-color="#fff5e6"/><stop offset="40%" stop-color="#ffe0b0"/><stop offset="100%" stop-color="#cc9966"/></radialGradient><radialGradient id="moonGlowNight" cx="60%" cy="30%" r="60%"><stop offset="0%" stop-color="#f0f0ff"/><stop offset="40%" stop-color="#d0d8ff"/><stop offset="100%" stop-color="#8899cc"/></radialGradient></defs><circle cx="20" cy="20" r="16" fill="url(#moonGlowDay)" id="moonCircle"/><circle cx="26" cy="14" r="13" fill="#0a0508"/></svg><span class="moon-emoji" id="moonEmoji">🌙</span><div class="moon-message" id="moonMessage">ты самая красивая</div></div>
+            <div class="moon" id="moon"><svg viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg"><defs><radialGradient id="moonGlowDay" cx="60%" cy="30%" r="60%"><stop offset="0%" stop-color="#fff5e6"/><stop offset="40%" stop-color="#ffe0b0"/><stop offset="100%" stop-color="#cc9966"/></radialGradient><radialGradient id="moonGlowNight" cx="60%" cy="30%" r="60%"><stop offset="0%" stop-color="#f0f0ff"/><stop offset="40%" stop-color="#d0d8ff"/><stop offset="100%" stop-color="#8899cc"/></radialGradient></defs><circle cx="20" cy="20" r="16" fill="url(#moonGlowDay)" id="moonCircle"/><circle cx="26" cy="14" r="13" fill="#0a0508"/></svg><div class="moon-message" id="moonMessage">ты самая красивая</div></div>
             <div class="top-center"><span class="happiness">Сайт счастья</span><span class="countdown" id="countdown">загрузка...</span><span class="random-phrase-top" id="randomPhraseTop"></span></div>
             <button class="menu-btn" id="menuBtn" aria-label="Меню"><span></span><span></span><span></span></button>
             <video id="myVideo" playsinline loop preload="none"><source src="https://github.com/thxforKarina/karina/releases/download/v3.0/Karina.mp4" type="video/mp4"></video>
@@ -129,7 +122,7 @@
 
         const phrases=['ты пахнешь счастьем','твой смех — мой любимый звук','даже тишина с тобой — музыка','ты снишься мне чаще, чем я сплю','с тобой мир цветной','моё сердце бьётся в ритме твоего имени','ты — моя любимая случайность','без тебя даже звёзды тусклее','ты делаешь обычный день — праздником','смотрю на тебя и забываю дышать'];
         const phraseEl=document.getElementById('randomPhraseTop');let pi=Math.floor(Math.random()*phrases.length);phraseEl.textContent=phrases[pi];
-        setInterval(()=>{phraseEl.style.opacity='0';setTimeout(()=>{pi=(pi+1)%phrases.length;phraseEl.textContent=phrases[pi];phraseEl.style.opacity='1';},500)},7e3);
+        setInterval(()=>{phraseEl.style.opacity='0';setTimeout(()=>{pi=(pi+1)%phrases.length;phraseEl.textContent=phrases[pi];phraseEl.style.opacity='1'},500)},7e3);
 
         const cardPhrases=['люблю тебя','ты моё всё','скучаю','ты прекрасна','моя нежная','самая родная','будь моей','ты — чудо','обожаю тебя','моя девочка'];let cardOpened=false;
         function openPostcard(){playRustleSound();const c=document.getElementById('postcard');if(!cardOpened){c.querySelector('.hidden-message').textContent=cardPhrases[Math.floor(Math.random()*cardPhrases.length)];cardOpened=true}c.classList.toggle('opened');if(!c.classList.contains('opened'))cardOpened=false}
@@ -158,4 +151,18 @@
 
         const vs=document.getElementById('videoSection');new IntersectionObserver(e=>{e.forEach(e=>{if(e.intersectionRatio<0.5)v.classList.add('dimmed');else v.classList.remove('dimmed')})},{threshold:[0,0.5,1]}).observe(vs);
 
-        function updateMoonColor(){const n=new Date(),wh=parseInt(n.toLocaleString('en-US',{timeZone:'Europe/Warsaw',hour:'2-digit',hour12:false})),m=document.getElementById('moon'),mc=document.getElementById('moonCircle'),me=document.getElementById('moonEmoji');if(wh>=6&&wh<12){m.classList.add('day');m.classList.remove('night');mc.setAttribute('fill','url(#moonGlowDay)');me.textContent='☀️'}else if(wh>=12&&wh<20){m.classList.add('day');m.classList.remove('night');mc.setAttribute('fill','url(#moonGlowDay)');me.textContent='😊'}else{m.classList.add('night');m.classList.remove
+        function updateMoonColor(){const n=new Date(),wh=parseInt(n.toLocaleString('en-US',{timeZone:'Europe/Warsaw',hour:'2-digit',hour12:false})),m=document.getElementById('moon'),mc=document.getElementById('moonCircle');if(wh>=6&&wh<20){m.classList.add('day');m.classList.remove('night');mc.setAttribute('fill','url(#moonGlowDay)')}else{m.classList.add('night');m.classList.remove('day');mc.setAttribute('fill','url(#moonGlowNight)')}}
+        updateMoonColor();setInterval(updateMoonColor,6e4);
+
+        const moonEl=document.getElementById('moon');if(window.DeviceOrientationEvent){window.addEventListener('deviceorientation',function(e){if(e.gamma!==null&&e.beta!==null){moonEl.style.transform=`translate(${Math.max(-8,Math.min(8,e.gamma/5))}px,${Math.max(-8,Math.min(8,(e.beta-45)/5))}px)`}})}
+
+        const moonMessage=document.getElementById('moonMessage');let moonPressTimer;
+        moonEl.addEventListener('touchstart',function(e){e.stopPropagation();moonPressTimer=setTimeout(()=>{moonMessage.classList.add('show')},600)});
+        moonEl.addEventListener('touchend',function(){clearTimeout(moonPressTimer);setTimeout(()=>moonMessage.classList.remove('show'),2e3)});
+        moonEl.addEventListener('mousedown',function(e){e.stopPropagation();moonPressTimer=setTimeout(()=>{moonMessage.classList.add('show')},600)});
+        moonEl.addEventListener('mouseup',function(){clearTimeout(moonPressTimer);setTimeout(()=>moonMessage.classList.remove('show'),2e3)});
+
+        const canvas=document.getElementById('drawCanvas'),ctx=canvas.getContext('2d');let drawing=false,drawTimeout;
+        function resizeCanvas(){canvas.width=window.innerWidth;canvas.height=window.innerHeight}
+        resizeCanvas();window.addEventListener('resize',resizeCanvas);
+        document.addEventListener('touchstart',function(e){if(e.touches.length===3){drawing=true;e.preventDefault()}},{passive:false});
