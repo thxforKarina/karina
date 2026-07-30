@@ -8,15 +8,15 @@
         *{margin:0;padding:0;box-sizing:border-box}
         body{background:#000;overflow-x:hidden;user-select:none;-webkit-user-select:none;font-family:'Arial',sans-serif;touch-action:manipulation}
 
-        .section{width:100vw;height:100vh;display:flex;justify-content:center;align-items:center;position:relative;overflow:hidden;flex-shrink:0}
+        .page-wrapper{position:relative;width:100%}
+
+        .video-section{width:100%;height:100vh;display:flex;justify-content:center;align-items:center;position:relative;overflow:hidden;position:sticky;top:0}
         
         .video-wrapper{position:relative;width:100%;height:100%;display:flex;justify-content:center;align-items:center}
         video{width:100%;height:100%;object-fit:contain;position:relative;z-index:1;transition:filter 1.2s ease}
         video.dimmed{filter:brightness(0.25) saturate(0.7)}
 
-        /* Рисование пальцем */
         canvas{position:fixed;top:0;left:0;width:100%;height:100%;z-index:60;pointer-events:none}
-        .drawing-mode canvas{pointer-events:auto}
 
         .global-hearts{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:50}
         .floating-heart{position:absolute;animation:floatUp linear infinite;opacity:0;filter:drop-shadow(0 0 6px rgba(255,153,187,0.4))}
@@ -34,7 +34,6 @@
             100%{opacity:0;transform:translate(-50%,-50%) scale(1) translateY(-80px)}
         }
 
-        /* Капли дождя */
         .raindrop{position:fixed;pointer-events:none;z-index:55;animation:rainFall linear forwards;opacity:0.5}
         @keyframes rainFall{
             0%{transform:translateY(-10vh);opacity:0}
@@ -96,18 +95,15 @@
             .play-btn svg{width:28px;height:28px;margin-left:3px}
         }
 
-        .text-section{flex-direction:column;gap:30px;padding:40px 25px;overflow-y:auto;background:linear-gradient(to bottom,#0a0508 0%,#140a10 20%,#1f0d16 40%,#2d0f1a 70%,#1a0a0f 100%);transition:background 1s ease}
-        .text-section .message{color:#ccc;font-size:15px;text-align:center;font-family:'Georgia','Times New Roman',serif;max-width:85%;line-height:1.8;animation:fadeIn 3s ease;font-style:italic;position:relative;z-index:1}
+        .text-section{display:flex;flex-direction:column;gap:30px;padding:60px 25px 80px;background:linear-gradient(to bottom,#0a0508 0%,#140a10 20%,#1f0d16 40%,#2d0f1a 70%,#1a0a0f 100%);position:relative;z-index:1}
+        .text-section .message{color:#ccc;font-size:15px;text-align:center;font-family:'Georgia','Times New Roman',serif;max-width:85%;line-height:1.8;font-style:italic;position:relative;z-index:1;margin:0 auto}
         .message-wrapper{position:relative;display:flex;flex-direction:column;align-items:center}
         .message-wrapper .message-reflect{color:#ccc;font-size:15px;text-align:center;font-family:'Georgia','Times New Roman',serif;max-width:85%;line-height:1.8;font-style:italic;transform:scaleY(-1);opacity:0.08;margin-top:-10px;mask-image:linear-gradient(to bottom,rgba(0,0,0,0.3),rgba(0,0,0,0));-webkit-mask-image:linear-gradient(to bottom,rgba(0,0,0,0.3),rgba(0,0,0,0));pointer-events:none;user-select:none}
         @media screen and (max-width:480px){
             .message-wrapper .message-reflect{font-size:15px;margin-top:-8px}
         }
-        .text-section .love-word{font-family:'Great Vibes','Pacifico','Brush Script MT',cursive;font-size:42px;color:#ff99bb;text-shadow:0 0 20px rgba(255,153,187,0.4);animation:fadeInUp 2s ease;text-align:center}
-        .random-phrase{color:#b8a99a;font-size:12px;text-align:center;font-family:'Georgia','Times New Roman',serif;font-style:italic;animation:fadeIn 4s ease;padding:0 20px}
-        
-        @keyframes fadeInUp{from{opacity:0;transform:translateY(30px)}to{opacity:1;transform:translateY(0)}}
-        @keyframes fadeIn{from{opacity:0;transform:translateY(15px)}to{opacity:1;transform:translateY(0)}}
+        .text-section .love-word{font-family:'Great Vibes','Pacifico','Brush Script MT',cursive;font-size:42px;color:#ff99bb;text-shadow:0 0 20px rgba(255,153,187,0.4);text-align:center}
+        .random-phrase{color:#b8a99a;font-size:12px;text-align:center;font-family:'Georgia','Times New Roman',serif;font-style:italic;padding:0 20px}
 
         .scroll-hint{position:absolute;bottom:80px;color:#ff99bb;font-size:18px;animation:softPulse 2s ease-in-out infinite;font-family:'Great Vibes','Pacifico','Brush Script MT',cursive;pointer-events:none;z-index:3;text-shadow:0 0 15px rgba(255,153,187,0.6),0 0 30px rgba(255,153,187,0.3);letter-spacing:1px}
         @media screen and (max-width:480px){
@@ -141,12 +137,10 @@
             </svg>
             @kkarinova_
         </a>
-
         <div class="divider">
             <span class="infinity">∞</span>
             <span class="date-heart">02.08.26 💕</span>
         </div>
-
         <a href="https://www.instagram.com/maks.qg/" target="_blank" class="insta-link">
             <svg class="insta-icon-svg" viewBox="0 0 24 24" fill="none">
                 <rect x="2" y="2" width="20" height="20" rx="5" stroke="url(#igGrad2)" stroke-width="1.8"/>
@@ -162,11 +156,11 @@
             </svg>
             @maks.qg
         </a>
-
         <div class="forever-text">навсегда вместе</div>
     </div>
 
-    <div class="section" id="videoSection">
+    <!-- Видео секция (sticky) -->
+    <div class="video-section" id="videoSection">
         <div class="video-wrapper">
             <div class="moon" id="moon">
                 <svg viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg">
@@ -186,33 +180,27 @@
                     <circle cx="26" cy="14" r="13" fill="#0a0508"/>
                 </svg>
             </div>
-
             <div class="top-center">
                 <span class="happiness">Сайт счастья</span>
                 <span class="countdown" id="countdown">загрузка...</span>
             </div>
-            
             <button class="menu-btn" id="menuBtn" aria-label="Меню">
-                <span></span>
-                <span></span>
-                <span></span>
+                <span></span><span></span><span></span>
             </button>
-
             <video id="myVideo" playsinline loop preload="auto">
                 <source src="https://github.com/thxforKarina/karina/releases/download/v3.0/Karina.mp4" type="video/mp4">
             </video>
-
             <div class="play-overlay" id="playOverlay">
                 <button class="play-btn" id="playBtn">
                     <svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg>
                 </button>
             </div>
-
             <div class="scroll-hint">листай вниз</div>
         </div>
     </div>
 
-    <div class="section text-section" id="textSection">
+    <!-- Текст (скроллится сразу после видео) -->
+    <div class="text-section" id="textSection">
         <div class="message-wrapper">
             <div class="message">
                 Знаешь, я долго думал, как сказать это не банально. Но потом понял — когда чувства настоящие, слова не должны быть сложными.<br><br>
@@ -255,40 +243,30 @@
                 countdownEl.textContent = `${days} дн ${hours} ч ${minutes} мин`;
             }
         }
-        updateCountdown();
-        setInterval(updateCountdown, 60000);
+        updateCountdown(); setInterval(updateCountdown, 60000);
 
         // Случайная фраза
         const phrases = ['ты пахнешь счастьем','твой смех — мой любимый звук','даже тишина с тобой — музыка','ты снишься мне чаще, чем я сплю','с тобой мир цветной','моё сердце бьётся в ритме твоего имени','ты — моя любимая случайность','без тебя даже звёзды тусклее','ты делаешь обычный день — праздником','смотрю на тебя и забываю дышать'];
         document.getElementById('randomPhrase').textContent = phrases[Math.floor(Math.random() * phrases.length)];
 
-        // Сердечки с тенью
+        // Сердечки
         const globalHearts = document.getElementById('globalHearts');
         function createHeart() {
-            const heart = document.createElement('span');
-            heart.className = 'floating-heart';
-            heart.textContent = '💕';
-            heart.style.left = Math.random() * 100 + '%';
-            heart.style.fontSize = (Math.random() * 18 + 12) + 'px';
+            const heart = document.createElement('span'); heart.className = 'floating-heart'; heart.textContent = '💕';
+            heart.style.left = Math.random() * 100 + '%'; heart.style.fontSize = (Math.random() * 18 + 12) + 'px';
             heart.style.animationDuration = (Math.random() * 10 + 10) + 's';
-            globalHearts.appendChild(heart);
-            setTimeout(() => heart.remove(), 20000);
+            globalHearts.appendChild(heart); setTimeout(() => heart.remove(), 20000);
         }
-        setInterval(createHeart, 700);
-        for(let i = 0; i < 5; i++) setTimeout(createHeart, i * 200);
+        setInterval(createHeart, 700); for(let i = 0; i < 5; i++) setTimeout(createHeart, i * 200);
 
-        // Двойное нажатие — сердечко
+        // Двойное нажатие
         let lastTap = 0;
         document.addEventListener('click', function(e) {
             const now = Date.now();
             if (now - lastTap < 300) {
-                const heart = document.createElement('span');
-                heart.className = 'tap-heart';
-                heart.textContent = '💕';
-                heart.style.left = e.clientX + 'px';
-                heart.style.top = e.clientY + 'px';
-                document.body.appendChild(heart);
-                setTimeout(() => heart.remove(), 1000);
+                const heart = document.createElement('span'); heart.className = 'tap-heart'; heart.textContent = '💕';
+                heart.style.left = e.clientX + 'px'; heart.style.top = e.clientY + 'px';
+                document.body.appendChild(heart); setTimeout(() => heart.remove(), 1000);
                 if (navigator.vibrate) navigator.vibrate(30);
             }
             lastTap = now;
@@ -297,8 +275,7 @@
         // Звук
         const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
         function playClickSound() {
-            const osc = audioCtx.createOscillator();
-            const gain = audioCtx.createGain();
+            const osc = audioCtx.createOscillator(), gain = audioCtx.createGain();
             osc.connect(gain); gain.connect(audioCtx.destination);
             osc.frequency.setValueAtTime(1200, audioCtx.currentTime);
             osc.frequency.exponentialRampToValueAtTime(600, audioCtx.currentTime + 0.15);
@@ -307,20 +284,14 @@
             osc.start(audioCtx.currentTime); osc.stop(audioCtx.currentTime + 0.2);
         }
 
-        // Видео и кнопка
+        // Видео
         const video = document.getElementById('myVideo');
         const playOverlay = document.getElementById('playOverlay');
         const playBtn = document.getElementById('playBtn');
-        playBtn.addEventListener('click', () => {
-            playClickSound();
-            video.muted = false;
-            video.play().then(() => playOverlay.classList.add('hidden')).catch(() => { video.muted = true; video.play().then(() => playOverlay.classList.add('hidden')); });
-        });
+        playBtn.addEventListener('click', () => { playClickSound(); video.muted = false; video.play().then(() => playOverlay.classList.add('hidden')).catch(() => { video.muted = true; video.play().then(() => playOverlay.classList.add('hidden')); }); });
 
         // Меню
-        const menuBtn = document.getElementById('menuBtn');
-        const sidePanel = document.getElementById('sidePanel');
-        const overlay = document.getElementById('overlay');
+        const menuBtn = document.getElementById('menuBtn'), sidePanel = document.getElementById('sidePanel'), overlay = document.getElementById('overlay');
         menuBtn.addEventListener('click', () => { playClickSound(); menuBtn.classList.toggle('open'); sidePanel.classList.toggle('open'); overlay.classList.toggle('show'); });
         overlay.addEventListener('click', () => { menuBtn.classList.remove('open'); sidePanel.classList.remove('open'); overlay.classList.remove('show'); });
 
@@ -329,82 +300,58 @@
         const observer = new IntersectionObserver((entries) => { entries.forEach(entry => { if (entry.intersectionRatio < 0.5) video.classList.add('dimmed'); else video.classList.remove('dimmed'); }); }, { threshold: [0, 0.5, 1] });
         observer.observe(videoSection);
 
-        // Цвет луны по времени суток (Варшава)
+        // Луна по времени суток
         function updateMoonColor() {
             const now = new Date();
             const warsawHour = parseInt(now.toLocaleString('en-US', { timeZone: 'Europe/Warsaw', hour: '2-digit', hour12: false }));
-            const moon = document.getElementById('moon');
-            const moonCircle = document.getElementById('moonCircle');
+            const moon = document.getElementById('moon'), moonCircle = document.getElementById('moonCircle');
             if (warsawHour >= 6 && warsawHour < 20) { moon.classList.add('day'); moon.classList.remove('night'); moonCircle.setAttribute('fill', 'url(#moonGlowDay)'); }
             else { moon.classList.add('night'); moon.classList.remove('day'); moonCircle.setAttribute('fill', 'url(#moonGlowNight)'); }
         }
-        updateMoonColor();
-        setInterval(updateMoonColor, 60000);
+        updateMoonColor(); setInterval(updateMoonColor, 60000);
 
-        // Покачивание луны при наклоне телефона
+        // Наклон луны
         const moonEl = document.getElementById('moon');
         if (window.DeviceOrientationEvent) {
             window.addEventListener('deviceorientation', function(e) {
                 if (e.gamma !== null && e.beta !== null) {
-                    const x = Math.max(-8, Math.min(8, e.gamma / 5));
-                    const y = Math.max(-8, Math.min(8, (e.beta - 45) / 5));
+                    const x = Math.max(-8, Math.min(8, e.gamma / 5)), y = Math.max(-8, Math.min(8, (e.beta - 45) / 5));
                     moonEl.style.transform = `translate(${x}px, ${y}px)`;
                 }
             });
         }
 
-        // Погода — дождь в Варшаве
+        // Дождь
         async function checkRain() {
             try {
                 const resp = await fetch('https://api.open-meteo.com/v1/forecast?latitude=52.2297&longitude=21.0122&current=rain');
                 const data = await resp.json();
-                if (data.current && data.current.rain > 0) startRain();
+                if (data.current && data.current.rain > 0) {
+                    setInterval(() => {
+                        const drop = document.createElement('div'); drop.className = 'raindrop'; drop.textContent = '💧';
+                        drop.style.left = Math.random() * 100 + '%'; drop.style.fontSize = (Math.random() * 10 + 8) + 'px';
+                        drop.style.animationDuration = (Math.random() * 2 + 2) + 's';
+                        document.body.appendChild(drop); setTimeout(() => drop.remove(), 4000);
+                    }, 400);
+                }
             } catch(e) {}
-        }
-        function startRain() {
-            setInterval(() => {
-                const drop = document.createElement('div');
-                drop.className = 'raindrop';
-                drop.textContent = '💧';
-                drop.style.left = Math.random() * 100 + '%';
-                drop.style.fontSize = (Math.random() * 10 + 8) + 'px';
-                drop.style.animationDuration = (Math.random() * 2 + 2) + 's';
-                document.body.appendChild(drop);
-                setTimeout(() => drop.remove(), 4000);
-            }, 400);
         }
         checkRain();
 
         // Рисование пальцем
-        const canvas = document.getElementById('drawCanvas');
-        const ctx = canvas.getContext('2d');
-        let drawing = false;
-        let drawTimeout;
-        
+        const canvas = document.getElementById('drawCanvas'), ctx = canvas.getContext('2d');
+        let drawing = false, drawTimeout;
         function resizeCanvas() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
-        resizeCanvas();
-        window.addEventListener('resize', resizeCanvas);
-
-        document.addEventListener('touchstart', function(e) {
-            if (e.touches.length === 3) { drawing = true; e.preventDefault(); }
-        }, { passive: false });
-        
+        resizeCanvas(); window.addEventListener('resize', resizeCanvas);
+        document.addEventListener('touchstart', function(e) { if (e.touches.length === 3) { drawing = true; e.preventDefault(); } }, { passive: false });
         document.addEventListener('touchmove', function(e) {
-            if (drawing) {
-                e.preventDefault();
-                const touch = e.touches[0];
-                ctx.beginPath();
-                ctx.arc(touch.clientX, touch.clientY, 4, 0, Math.PI * 2);
-                ctx.fillStyle = 'rgba(255,153,187,0.5)';
-                ctx.fill();
-                ctx.shadowColor = 'rgba(255,153,187,0.3)';
-                ctx.shadowBlur = 6;
-                clearTimeout(drawTimeout);
-                drawTimeout = setTimeout(() => { ctx.clearRect(0, 0, canvas.width, canvas.height); }, 2000);
+            if (drawing) { e.preventDefault();
+                const touch = e.touches[0]; ctx.beginPath(); ctx.arc(touch.clientX, touch.clientY, 4, 0, Math.PI*2);
+                ctx.fillStyle = 'rgba(255,153,187,0.5)'; ctx.fill(); ctx.shadowColor = 'rgba(255,153,187,0.3)'; ctx.shadowBlur = 6;
+                clearTimeout(drawTimeout); drawTimeout = setTimeout(() => ctx.clearRect(0, 0, canvas.width, canvas.height), 2000);
             }
         }, { passive: false });
-        
-        document.addEventListener('touchend', function() { drawing = false; });
+        document.addEventListener('touchend', () => { drawing = false; });
     </script>
 </body>
 </html>
