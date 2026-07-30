@@ -11,11 +11,9 @@
         video{width:100%;height:100%;object-fit:contain;position:relative;z-index:1;transition:filter 0.8s ease}
         video.dimmed{filter:brightness(0.3)}
 
-        /* Глобальный контейнер для сердечек — поверх всего */
         .global-hearts{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:50}
 
-        .cdg-heart{position:absolute;animation:floatUpCDG linear infinite;opacity:0;display:flex;align-items:center;justify-content:center}
-        .cdg-heart svg{width:100%;height:100%}
+        .cdg-heart{position:absolute;animation:floatUpCDG linear infinite;opacity:0}
         @keyframes floatUpCDG{
             0%{transform:translateY(105vh) scale(0.3) rotate(0deg);opacity:0}
             8%{opacity:0.45}
@@ -81,7 +79,6 @@
 </head>
 <body>
 
-    <!-- Глобальные летающие сердечки CDG Play -->
     <div class="global-hearts" id="globalHearts"></div>
 
     <div class="overlay" id="overlay"></div>
@@ -140,23 +137,24 @@
     </div>
 
     <script>
-        // Глобальные сердечки CDG Play
+        // Глобальные сердечки CDG Play — точная копия оригинала
         const globalHearts = document.getElementById('globalHearts');
         
         function createCDGHeart() {
             const heart = document.createElement('div');
             heart.className = 'cdg-heart';
             
-            const size = Math.random() * 16 + 12; // 12-28px
+            const size = Math.random() * 14 + 10;
             heart.style.width = size + 'px';
-            heart.style.height = size + 'px';
+            heart.style.height = (size * 1.05) + 'px';
             heart.style.left = Math.random() * 100 + '%';
             heart.style.animationDuration = (Math.random() * 10 + 12) + 's';
             
-            heart.innerHTML = `<svg viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg">
-                <path d="M20 35 C10 28 2 22 2 14 C2 8 6 3 11 3 C14 3 17 5 20 9 C23 5 26 3 29 3 C34 3 38 8 38 14 C38 22 30 28 20 35Z" fill="#e63946" opacity="0.9"/>
-                <circle cx="16" cy="16" r="2.5" fill="#111"/>
-                <circle cx="24" cy="16" r="2.5" fill="#111"/>
+            // SVG точно как оригинал CDG Play: вытянутое сердце, глаза близко к центру
+            heart.innerHTML = `<svg viewBox="0 0 50 55" xmlns="http://www.w3.org/2000/svg">
+                <path d="M25 50 C10 38 0 30 0 18 C0 8 6 2 13 2 C18 2 22 5 25 11 C28 5 32 2 37 2 C44 2 50 8 50 18 C50 30 40 38 25 50Z" fill="#e63946"/>
+                <circle cx="19" cy="20" r="3.2" fill="#111"/>
+                <circle cx="31" cy="20" r="3.2" fill="#111"/>
             </svg>`;
             
             globalHearts.appendChild(heart);
@@ -166,13 +164,11 @@
             }, 22000);
         }
         
-        setInterval(createCDGHeart, 800);
-        // Создаём первые несколько сразу
-        for(let i = 0; i < 5; i++) {
-            setTimeout(createCDGHeart, i * 200);
+        setInterval(createCDGHeart, 900);
+        for(let i = 0; i < 4; i++) {
+            setTimeout(createCDGHeart, i * 250);
         }
 
-        // Меню
         const menuBtn = document.getElementById('menuBtn');
         const sidePanel = document.getElementById('sidePanel');
         const overlay = document.getElementById('overlay');
@@ -189,7 +185,6 @@
             overlay.classList.remove('show');
         });
 
-        // Затемнение видео
         const video = document.getElementById('myVideo');
         const videoSection = document.getElementById('videoSection');
         
