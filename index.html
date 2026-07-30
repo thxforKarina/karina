@@ -11,6 +11,15 @@
         video{width:100%;height:100%;object-fit:contain;position:relative;z-index:1;transition:filter 0.8s ease}
         video.dimmed{filter:brightness(0.3)}
 
+        .global-hearts{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:50}
+        .floating-heart{position:absolute;animation:floatUp linear infinite;opacity:0}
+        @keyframes floatUp{
+            0%{transform:translateY(105vh) scale(0.4) rotate(0deg);opacity:0}
+            10%{opacity:0.7}
+            85%{opacity:0.65}
+            100%{transform:translateY(-10vh) scale(1.1) rotate(340deg);opacity:0}
+        }
+
         .name-overlay{position:absolute;top:16px;right:20px;color:#fff;font-size:24px;font-family:'Great Vibes','Pacifico','Brush Script MT',cursive;text-shadow:0 0 12px rgba(255,255,255,0.5),0 0 25px rgba(255,255,255,0.25);animation:fadeInName 2s ease;z-index:3;letter-spacing:1.5px;pointer-events:none}
         @media screen and (max-width:480px){
             .name-overlay{top:12px;right:16px;font-size:20px}
@@ -26,7 +35,7 @@
             .menu-btn{top:10px;left:10px;width:36px;height:32px;padding:7px 7px}
         }
 
-        .side-panel{position:fixed;top:0;left:-280px;width:260px;height:100vh;background:rgba(0,0,0,0.92);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);z-index:15;transition:left 0.4s ease;display:flex;flex-direction:column;align-items:center;padding:80px 20px 30px;gap:20px;border-right:1px solid rgba(255,255,255,0.08);overflow-y:auto}
+        .side-panel{position:fixed;top:0;left:-280px;width:260px;height:100vh;background:rgba(0,0,0,0.92);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);z-index:15;transition:left 0.4s ease;display:flex;flex-direction:column;align-items:center;padding:80px 20px 30px;gap:16px;border-right:1px solid rgba(255,255,255,0.08);overflow-y:auto}
         .side-panel.open{left:0}
         @media screen and (max-width:480px){
             .side-panel{width:240px;left:-240px}
@@ -34,11 +43,13 @@
         .side-panel .insta-link{display:flex;align-items:center;gap:10px;color:#e0d5c8;text-decoration:none;font-size:16px;padding:10px 16px;border-radius:10px;background:rgba(255,255,255,0.06);width:100%;transition:0.3s;flex-shrink:0}
         .side-panel .insta-link:hover{background:rgba(255,255,255,0.12)}
         .insta-icon-svg{width:22px;height:22px;flex-shrink:0}
-        .side-panel .extra-text{color:#b8a99a;font-size:12px;text-align:center;font-family:'Georgia','Times New Roman',serif;line-height:1.7;font-style:italic;padding:15px 10px;width:100%}
+        .side-panel .divider{display:flex;align-items:center;gap:10px;color:#b8a99a;font-size:14px;font-family:'Georgia','Times New Roman',serif;font-style:italic;width:100%;justify-content:center}
+        .side-panel .divider .infinity{font-size:22px;color:#e0d5c8;font-family:'Great Vibes','Pacifico','Brush Script MT',cursive}
+        .side-panel .divider .date-heart{display:flex;align-items:center;gap:6px;color:#c49aaa;font-family:'Great Vibes','Pacifico','Brush Script MT',cursive;font-size:18px}
+        .side-panel .forever-text{color:#b8a99a;font-size:12px;text-align:center;font-family:'Georgia','Times New Roman',serif;line-height:1.7;font-style:italic;padding:10px 10px;width:100%}
         .overlay{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.5);z-index:14;display:none}
         .overlay.show{display:block}
 
-        /* Кнопка СМОТРЕТЬ — всегда видна, пока не нажмут */
         .play-overlay{position:absolute;top:0;left:0;width:100%;height:100%;display:flex;justify-content:center;align-items:center;z-index:5;background:rgba(0,0,0,0.7);transition:opacity 0.5s ease}
         .play-overlay.hidden{opacity:0;pointer-events:none}
         .play-btn{width:100px;height:100px;background:rgba(255,153,187,0.9);border:none;border-radius:50%;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:transform 0.3s ease,box-shadow 0.3s ease;box-shadow:0 0 30px rgba(255,153,187,0.5),0 0 60px rgba(255,153,187,0.3)}
@@ -56,14 +67,6 @@
         @keyframes fadeInUp{from{opacity:0;transform:translateY(30px)}to{opacity:1;transform:translateY(0)}}
         @keyframes fadeIn{from{opacity:0;transform:translateY(15px)}to{opacity:1;transform:translateY(0)}}
 
-        .love-section{background:linear-gradient(to bottom,#1a0a0f 0%,#000 100%);flex-direction:column;gap:20px}
-        .love-section .big-love{font-family:'Great Vibes','Pacifico','Brush Script MT',cursive;font-size:56px;color:#fff;text-shadow:0 0 30px rgba(255,153,187,0.6),0 0 60px rgba(255,153,187,0.3);animation:fadeInLove 2.5s ease;text-align:center;line-height:1.4}
-        @media screen and (max-width:480px){
-            .love-section .big-love{font-size:42px}
-            .text-section .love-word{font-size:34px}
-        }
-        @keyframes fadeInLove{from{opacity:0;transform:scale(0.9)}to{opacity:1;transform:scale(1)}}
-
         .scroll-hint{position:absolute;bottom:80px;color:#ff99bb;font-size:18px;animation:softPulse 2s ease-in-out infinite;font-family:'Great Vibes','Pacifico','Brush Script MT',cursive;pointer-events:none;z-index:3;text-shadow:0 0 15px rgba(255,153,187,0.6),0 0 30px rgba(255,153,187,0.3);letter-spacing:1px}
         @media screen and (max-width:480px){
             .scroll-hint{bottom:70px;font-size:16px}
@@ -75,6 +78,8 @@
     </style>
 </head>
 <body>
+
+    <div class="global-hearts" id="globalHearts"></div>
 
     <div class="overlay" id="overlay"></div>
 
@@ -94,9 +99,29 @@
             </svg>
             @kkarinova_
         </a>
-        <div class="extra-text">
-            здесь мог бы быть твой ник,<br>но ты и так знаешь,<br>что я на тебя подписан<br>давно и навсегда.
+
+        <div class="divider">
+            <span class="infinity">∞</span>
+            <span class="date-heart">02.08.26 💕</span>
         </div>
+
+        <a href="https://www.instagram.com/maks.qg/" target="_blank" class="insta-link">
+            <svg class="insta-icon-svg" viewBox="0 0 24 24" fill="none">
+                <rect x="2" y="2" width="20" height="20" rx="5" stroke="url(#igGrad2)" stroke-width="1.8"/>
+                <circle cx="12" cy="12" r="4.5" stroke="url(#igGrad2)" stroke-width="1.8"/>
+                <circle cx="17.5" cy="6.5" r="1.1" fill="url(#igGrad2)"/>
+                <defs>
+                    <linearGradient id="igGrad2" x1="0" y1="24" x2="24" y2="0" gradientUnits="userSpaceOnUse">
+                        <stop stop-color="#f9ce34"/>
+                        <stop offset="0.3" stop-color="#ee2a7b"/>
+                        <stop offset="0.7" stop-color="#6228d7"/>
+                    </linearGradient>
+                </defs>
+            </svg>
+            @maks.qg
+        </a>
+
+        <div class="forever-text">навсегда вместе</div>
     </div>
 
     <div class="section" id="videoSection">
@@ -112,7 +137,6 @@
             <source src="https://github.com/thxforKarina/karina/releases/download/v3.0/Karina.mp4" type="video/mp4">
         </video>
 
-        <!-- Кнопка запуска -->
         <div class="play-overlay" id="playOverlay">
             <button class="play-btn" id="playBtn">
                 <svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg>
@@ -134,12 +158,28 @@
         <div class="love-word">Люблю.</div>
     </div>
 
-    <div class="section love-section">
-        <div class="big-love">Я тебя<br>люблю</div>
-    </div>
-
     <script>
-        // Запуск видео по кнопке
+        const globalHearts = document.getElementById('globalHearts');
+        
+        function createHeart() {
+            const heart = document.createElement('span');
+            heart.className = 'floating-heart';
+            heart.textContent = '💕';
+            heart.style.left = Math.random() * 100 + '%';
+            heart.style.fontSize = (Math.random() * 18 + 12) + 'px';
+            heart.style.animationDuration = (Math.random() * 10 + 10) + 's';
+            globalHearts.appendChild(heart);
+            
+            setTimeout(() => {
+                heart.remove();
+            }, 20000);
+        }
+        
+        setInterval(createHeart, 700);
+        for(let i = 0; i < 5; i++) {
+            setTimeout(createHeart, i * 200);
+        }
+
         const video = document.getElementById('myVideo');
         const playOverlay = document.getElementById('playOverlay');
         const playBtn = document.getElementById('playBtn');
@@ -156,7 +196,6 @@
             });
         });
 
-        // Меню
         const menuBtn = document.getElementById('menuBtn');
         const sidePanel = document.getElementById('sidePanel');
         const overlay = document.getElementById('overlay');
@@ -173,7 +212,6 @@
             overlay.classList.remove('show');
         });
 
-        // Затемнение видео
         const videoSection = document.getElementById('videoSection');
         
         const observer = new IntersectionObserver((entries) => {
