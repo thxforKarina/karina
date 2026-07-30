@@ -31,14 +31,15 @@
             100%{transform:translateY(-10vh) scale(1.1) rotate(340deg);opacity:0}
         }
 
-        .shooting-star{position:fixed;pointer-events:none;z-index:55;animation:shoot linear forwards}
+        /* Падающая звезда — летит вправо-вниз, хвост тянется слева */
+        .shooting-star{position:fixed;pointer-events:none;z-index:55;animation:shoot linear forwards;display:flex;align-items:center}
         @keyframes shoot{
-            0%{transform:translate(0,0) rotate(-35deg);opacity:1}
+            0%{transform:translate(0,0) rotate(35deg);opacity:1}
             70%{opacity:1}
-            100%{transform:translate(-400px,500px) rotate(-35deg);opacity:0}
+            100%{transform:translate(400px,500px) rotate(35deg);opacity:0}
         }
-        .shooting-star .tail{width:80px;height:2px;background:linear-gradient(to left,rgba(255,255,255,0.9),rgba(255,200,220,0.4),transparent);border-radius:2px}
-        .shooting-star .head{width:6px;height:6px;background:#fff;border-radius:50%;box-shadow:0 0 10px 3px rgba(255,255,255,0.8),0 0 20px 6px rgba(255,200,220,0.5);position:absolute;right:-3px;top:-2px}
+        .shooting-star .tail{width:80px;height:2px;background:linear-gradient(to right,transparent,rgba(255,200,220,0.4),rgba(255,255,255,0.9));border-radius:2px}
+        .shooting-star .head{width:6px;height:6px;background:#fff;border-radius:50%;box-shadow:0 0 10px 3px rgba(255,255,255,0.8),0 0 20px 6px rgba(255,200,220,0.5);flex-shrink:0}
 
         .tap-heart{position:fixed;pointer-events:none;z-index:100;font-size:40px;animation:tapHeartAnim 1s ease forwards;filter:drop-shadow(0 0 8px rgba(255,153,187,0.5))}
         @keyframes tapHeartAnim{
@@ -247,10 +248,12 @@
         }
         setInterval(createHeart, 700); for(let i = 0; i < 5; i++) setTimeout(createHeart, i * 200);
 
+        // Падающая звезда — теперь хвост тянется за головой
         function createShootingStar() {
             const star = document.createElement('div'); star.className = 'shooting-star';
-            star.style.top = Math.random() * 60 + '%'; star.style.left = Math.random() * 80 + 10 + '%';
+            star.style.top = Math.random() * 60 + '%'; star.style.left = Math.random() * 60 + 5 + '%';
             star.style.animationDuration = (Math.random() * 1 + 1.5) + 's';
+            // Хвост слева, голова справа — хвост тянется за головой при полёте вправо-вниз
             star.innerHTML = '<div class="tail"></div><div class="head"></div>';
             document.body.appendChild(star); setTimeout(() => star.remove(), 3000);
         }
