@@ -7,8 +7,9 @@
     <style>
         *{margin:0;padding:0;box-sizing:border-box}
         body{background:#000;overflow-x:hidden;user-select:none;-webkit-user-select:none;font-family:'Arial',sans-serif}
-        .section{width:100vw;height:100vh;display:flex;justify-content:center;align-items:center;position:relative;overflow:hidden}
-        video{width:100%;height:100%;object-fit:contain;position:relative;z-index:1}
+        .section{width:100vw;height:100vh;display:flex;justify-content:center;align-items:center;position:relative;overflow:hidden;flex-shrink:0}
+        video{width:100%;height:100%;object-fit:contain;position:relative;z-index:1;transition:filter 0.8s ease}
+        video.dimmed{filter:brightness(0.3)}
         .hearts-container{position:absolute;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:2}
         .floating-heart{position:absolute;animation:floatUp linear infinite;opacity:0}
         @keyframes floatUp{
@@ -45,7 +46,18 @@
 
         .text-section{background:linear-gradient(to bottom,#000 0%,#1a0a0f 30%,#2d0f1a 60%,#1a0a0f 100%);flex-direction:column;gap:30px;padding:40px 25px;overflow-y:auto}
         .text-section .message{color:#ccc;font-size:15px;text-align:center;font-family:'Georgia','Times New Roman',serif;max-width:85%;line-height:1.8;animation:fadeIn 3s ease;font-style:italic}
+        .text-section .love-word{font-family:'Great Vibes','Pacifico','Brush Script MT',cursive;font-size:42px;color:#ff99bb;text-shadow:0 0 20px rgba(255,153,187,0.4);animation:fadeInUp 2s ease;text-align:center}
+        @keyframes fadeInUp{from{opacity:0;transform:translateY(30px)}to{opacity:1;transform:translateY(0)}}
         @keyframes fadeIn{from{opacity:0;transform:translateY(15px)}to{opacity:1;transform:translateY(0)}}
+
+        .love-section{background:linear-gradient(to bottom,#1a0a0f 0%,#000 100%);flex-direction:column;gap:20px}
+        .love-section .big-love{font-family:'Great Vibes','Pacifico','Brush Script MT',cursive;font-size:56px;color:#fff;text-shadow:0 0 30px rgba(255,153,187,0.6),0 0 60px rgba(255,153,187,0.3);animation:fadeInLove 2.5s ease;text-align:center;line-height:1.4}
+        @media screen and (max-width:480px){
+            .love-section .big-love{font-size:42px}
+            .text-section .love-word{font-size:34px}
+        }
+        @keyframes fadeInLove{from{opacity:0;transform:scale(0.9)}to{opacity:1;transform:scale(1)}}
+
         #playButton{position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);z-index:10;padding:30px 60px;font-size:28px;background:rgba(255,255,255,0.9);border:none;border-radius:60px;cursor:pointer;font-weight:bold;letter-spacing:2px;color:#000;display:none;box-shadow:0 0 50px rgba(255,255,255,0.5)}
         @media screen and (max-width:480px){
             #playButton{padding:24px 44px;font-size:22px}
@@ -72,7 +84,7 @@
         </a>
     </div>
 
-    <div class="section">
+    <div class="section" id="videoSection">
         <div class="hearts-container" id="heartsContainer"></div>
         <div class="name-overlay">Карина</div>
         
@@ -89,7 +101,7 @@
         <button id="playButton">▶ СМОТРЕТЬ</button>
     </div>
 
-    <div class="section text-section">
+    <div class="section text-section" id="textSection">
         <div class="message">
             Знаешь, я долго думал, как сказать это не банально. Но потом понял — когда чувства настоящие, слова не должны быть сложными.<br><br>
             Ты из тех людей, рядом с которыми мир становится тише. Не в смысле скучнее — наоборот. Просто всё лишнее отваливается. Суета, тревоги, глупые мысли — всё это куда-то уходит, когда ты рядом. Остаётся только ощущение, что я на своём месте.<br><br>
@@ -98,6 +110,11 @@
             Я не обещаю, что всегда буду идеальным. Но я обещаю, что всегда буду настоящим. С тобой.<br><br>
             Ты — моё любимое совпадение. Спасибо, что ты есть.
         </div>
+        <div class="love-word">Люблю.</div>
+    </div>
+
+    <div class="section love-section">
+        <div class="big-love">Я тебя<br>люблю</div>
     </div>
 
     <script>
@@ -137,7 +154,22 @@
         
         setInterval(createHeart, 700);
 
-        const video=document.getElementById('myVideo');
+        // Затемнение видео при скролле
+        const video = document.getElementById('myVideo');
+        const videoSection = document.getElementById('videoSection');
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.intersectionRatio < 0.5) {
+                    video.classList.add('dimmed');
+                } else {
+                    video.classList.remove('dimmed');
+                }
+            });
+        }, { threshold: [0, 0.5, 1] });
+        
+        observer.observe(videoSection);
+
         const playButton=document.getElementById('playButton');
         function playVideoWithSound(){
             video.muted=false;
