@@ -9,22 +9,33 @@
         body{background:#000;overflow-x:hidden;user-select:none;-webkit-user-select:none}
         .section{width:100vw;height:100vh;display:flex;justify-content:center;align-items:center;position:relative}
         video{width:100%;height:100%;object-fit:contain}
-        .text-section{background:#000;flex-direction:column;gap:20px;padding:20px}
-        .text-section h1{color:#fff;font-size:36px;text-align:center;font-family:'Arial',sans-serif;animation:fadeIn 2s ease}
-        .text-section p{color:#ccc;font-size:20px;text-align:center;font-family:'Arial',sans-serif;max-width:80%;line-height:1.6;animation:fadeIn 3s ease}
-        .heart{color:#ff4d4d;font-size:40px;animation:pulse 1.5s infinite}
-        @keyframes fadeIn{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+        .name-overlay{position:absolute;top:16px;right:20px;color:#fff;font-size:24px;font-family:'Great Vibes','Pacifico','Brush Script MT',cursive;text-shadow:0 0 12px rgba(255,255,255,0.5),0 0 25px rgba(255,255,255,0.25);animation:fadeInName 2s ease;z-index:5;letter-spacing:1.5px;pointer-events:none}
+        @media screen and (max-width:480px){
+            .name-overlay{top:12px;right:16px;font-size:20px}
+        }
+        @keyframes fadeInName{from{opacity:0;transform:translateY(-15px)}to{opacity:1;transform:translateY(0)}}
+        .text-section{background:#000;flex-direction:column;gap:30px;padding:40px 25px;overflow-y:auto}
+        .text-section .message{color:#ccc;font-size:15px;text-align:center;font-family:'Georgia','Times New Roman',serif;max-width:85%;line-height:1.8;animation:fadeIn 3s ease;font-style:italic}
+        .text-section .signature{color:#fff;font-size:18px;text-align:center;font-family:'Georgia','Times New Roman',serif;animation:fadeIn 4s ease;margin-top:20px}
+        .heart{color:#ff4d4d;font-size:30px;animation:pulse 1.5s infinite}
+        @keyframes fadeIn{from{opacity:0;transform:translateY(15px)}to{opacity:1;transform:translateY(0)}}
         @keyframes pulse{0%{transform:scale(1)}50%{transform:scale(1.3)}100%{transform:scale(1)}}
         #playButton{position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);z-index:10;padding:30px 60px;font-size:28px;background:rgba(255,255,255,0.9);border:none;border-radius:60px;cursor:pointer;font-weight:bold;letter-spacing:2px;color:#000;display:none;box-shadow:0 0 50px rgba(255,255,255,0.5)}
+        @media screen and (max-width:480px){
+            #playButton{padding:24px 44px;font-size:22px}
+        }
         #playButton:hover{background:#fff;box-shadow:0 0 80px rgba(255,255,255,0.8)}
-        .scroll-hint{position:absolute;bottom:30px;color:#fff;font-size:16px;animation:bounce 2s infinite;opacity:0.7}
+        .scroll-hint{position:absolute;bottom:30px;color:#fff;font-size:15px;animation:bounce 2s infinite;opacity:0.7;font-family:'Arial',sans-serif;pointer-events:none}
+        @media screen and (max-width:480px){
+            .scroll-hint{font-size:13px;bottom:24px}
+        }
         @keyframes bounce{0%,100%{transform:translateY(0)}50%{transform:translateY(10px)}}
     </style>
 </head>
 <body>
 
-    <!-- Видео -->
     <div class="section">
+        <div class="name-overlay">Карина</div>
         <video id="myVideo" autoplay playsinline loop preload="auto">
             <source src="https://github.com/thxforKarina/karina/releases/download/v3.0/Karina.mp4" type="video/mp4">
         </video>
@@ -32,11 +43,17 @@
         <button id="playButton">▶ СМОТРЕТЬ</button>
     </div>
 
-    <!-- Текст -->
     <div class="section text-section">
         <span class="heart">❤️</span>
-        <h1>Карина</h1>
-        <p>Ты самое прекрасное, что случилось в моей жизни. Этот момент — для тебя.</p>
+        <div class="message">
+            Знаешь, я долго думал, как сказать это не банально. Но потом понял — когда чувства настоящие, слова не должны быть сложными.<br><br>
+            Ты из тех людей, рядом с которыми мир становится тише. Не в смысле скучнее — наоборот. Просто всё лишнее отваливается. Суета, тревоги, глупые мысли — всё это куда-то уходит, когда ты рядом. Остаётся только ощущение, что я на своём месте.<br><br>
+            Я не знаю, как ты это делаешь. Наверное, ты сама не замечаешь. Но твой смех, твой взгляд, то как ты поправляешь волосы или задумываешься на секунду прежде чем ответить — это те мелочи, из которых для меня состоит что-то очень большое.<br><br>
+            С тобой даже тишина уютная. Даже плохой день становится историей, которую можно рассказать с улыбкой. Ты делаешь обычные вещи — особенными. Простой вечер — тёплым. Простые слова — важными.<br><br>
+            Я не обещаю, что всегда буду идеальным. Но я обещаю, что всегда буду настоящим. С тобой.<br><br>
+            Ты — моё любимое совпадение. Спасибо, что ты есть.
+        </div>
+        <div class="signature">— Твой Макс</div>
         <span class="heart">❤️</span>
     </div>
 
