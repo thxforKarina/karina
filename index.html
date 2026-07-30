@@ -3,15 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    <title>Для Карины</title>
+    <title>Для Карины 💕</title>
+    
+    <!-- Иконка приложения -->
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='20' fill='%230a0508'/><text y='.9em' font-size='70' text-anchor='middle' x='50'>💕</text></svg>">
+    <link rel="apple-touch-icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='20' fill='%230a0508'/><text y='.9em' font-size='70' text-anchor='middle' x='50'>💕</text></svg>">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-title" content="Для Карины">
+    
     <style>
         *{margin:0;padding:0;box-sizing:border-box}
         body{background:#000;overflow-x:hidden;user-select:none;-webkit-user-select:none;font-family:'Arial',sans-serif;touch-action:manipulation}
 
-        .page-wrapper{position:relative;width:100%}
-
         .video-section{width:100%;height:100vh;display:flex;justify-content:center;align-items:center;position:relative;overflow:hidden;position:sticky;top:0}
-        
         .video-wrapper{position:relative;width:100%;height:100%;display:flex;justify-content:center;align-items:center}
         video{width:100%;height:100%;object-fit:contain;position:relative;z-index:1;transition:filter 1.2s ease}
         video.dimmed{filter:brightness(0.25) saturate(0.7)}
@@ -26,6 +31,16 @@
             85%{opacity:0.35}
             100%{transform:translateY(-10vh) scale(1.1) rotate(340deg);opacity:0}
         }
+
+        /* Падающая звезда */
+        .shooting-star{position:fixed;pointer-events:none;z-index:55;animation:shoot linear forwards}
+        @keyframes shoot{
+            0%{transform:translate(0,0) rotate(-35deg);opacity:1}
+            70%{opacity:1}
+            100%{transform:translate(-400px,500px) rotate(-35deg);opacity:0}
+        }
+        .shooting-star .tail{width:80px;height:2px;background:linear-gradient(to left,rgba(255,255,255,0.9),rgba(255,200,220,0.4),transparent);border-radius:2px}
+        .shooting-star .head{width:6px;height:6px;background:#fff;border-radius:50%;box-shadow:0 0 10px 3px rgba(255,255,255,0.8),0 0 20px 6px rgba(255,200,220,0.5);position:absolute;right:-3px;top:-2px}
 
         .tap-heart{position:fixed;pointer-events:none;z-index:100;font-size:40px;animation:tapHeartAnim 1s ease forwards;filter:drop-shadow(0 0 8px rgba(255,153,187,0.5))}
         @keyframes tapHeartAnim{
@@ -54,6 +69,7 @@
         .top-center{position:absolute;top:14px;left:50%;transform:translateX(-50%);z-index:3;display:flex;flex-direction:column;align-items:center;gap:2px;pointer-events:none}
         .top-center .happiness{color:#ff99bb;font-size:16px;font-family:'Great Vibes','Pacifico','Brush Script MT',cursive;text-shadow:0 0 10px rgba(255,153,187,0.4);animation:fadeInName 2s ease;letter-spacing:1px}
         .top-center .countdown{color:#e0d5c8;font-size:10px;font-family:'Georgia','Times New Roman',serif;font-style:italic;animation:fadeInName 2.5s ease;white-space:nowrap}
+        .top-center .countdown .highlight{color:#ff99bb}
         @media screen and (max-width:480px){
             .top-center{top:10px;gap:1px}
             .top-center .happiness{font-size:13px}
@@ -105,7 +121,8 @@
         .text-section .love-word{font-family:'Great Vibes','Pacifico','Brush Script MT',cursive;font-size:42px;color:#ff99bb;text-shadow:0 0 20px rgba(255,153,187,0.4);text-align:center}
         .random-phrase{color:#b8a99a;font-size:12px;text-align:center;font-family:'Georgia','Times New Roman',serif;font-style:italic;padding:0 20px}
 
-        .scroll-hint{position:absolute;bottom:80px;color:#ff99bb;font-size:18px;animation:softPulse 2s ease-in-out infinite;font-family:'Great Vibes','Pacifico','Brush Script MT',cursive;pointer-events:none;z-index:3;text-shadow:0 0 15px rgba(255,153,187,0.6),0 0 30px rgba(255,153,187,0.3);letter-spacing:1px}
+        .scroll-hint{position:absolute;bottom:80px;color:#ff99bb;font-size:18px;animation:softPulse 2s ease-in-out infinite;font-family:'Great Vibes','Pacifico','Brush Script MT',cursive;pointer-events:none;z-index:3;text-shadow:0 0 15px rgba(255,153,187,0.6),0 0 30px rgba(255,153,187,0.3);letter-spacing:1px;transition:opacity 1s ease}
+        .scroll-hint.fade-out{opacity:0}
         @media screen and (max-width:480px){
             .scroll-hint{bottom:70px;font-size:16px}
         }
@@ -129,9 +146,7 @@
                 <circle cx="17.5" cy="6.5" r="1.1" fill="url(#igGrad)"/>
                 <defs>
                     <linearGradient id="igGrad" x1="0" y1="24" x2="24" y2="0" gradientUnits="userSpaceOnUse">
-                        <stop stop-color="#f9ce34"/>
-                        <stop offset="0.3" stop-color="#ee2a7b"/>
-                        <stop offset="0.7" stop-color="#6228d7"/>
+                        <stop stop-color="#f9ce34"/><stop offset="0.3" stop-color="#ee2a7b"/><stop offset="0.7" stop-color="#6228d7"/>
                     </linearGradient>
                 </defs>
             </svg>
@@ -148,9 +163,7 @@
                 <circle cx="17.5" cy="6.5" r="1.1" fill="url(#igGrad2)"/>
                 <defs>
                     <linearGradient id="igGrad2" x1="0" y1="24" x2="24" y2="0" gradientUnits="userSpaceOnUse">
-                        <stop stop-color="#f9ce34"/>
-                        <stop offset="0.3" stop-color="#ee2a7b"/>
-                        <stop offset="0.7" stop-color="#6228d7"/>
+                        <stop stop-color="#f9ce34"/><stop offset="0.3" stop-color="#ee2a7b"/><stop offset="0.7" stop-color="#6228d7"/>
                     </linearGradient>
                 </defs>
             </svg>
@@ -159,21 +172,16 @@
         <div class="forever-text">навсегда вместе</div>
     </div>
 
-    <!-- Видео секция (sticky) -->
     <div class="video-section" id="videoSection">
         <div class="video-wrapper">
             <div class="moon" id="moon">
                 <svg viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg">
                     <defs>
                         <radialGradient id="moonGlowDay" cx="60%" cy="30%" r="60%">
-                            <stop offset="0%" stop-color="#fff5e6"/>
-                            <stop offset="40%" stop-color="#ffe0b0"/>
-                            <stop offset="100%" stop-color="#cc9966"/>
+                            <stop offset="0%" stop-color="#fff5e6"/><stop offset="40%" stop-color="#ffe0b0"/><stop offset="100%" stop-color="#cc9966"/>
                         </radialGradient>
                         <radialGradient id="moonGlowNight" cx="60%" cy="30%" r="60%">
-                            <stop offset="0%" stop-color="#f0f0ff"/>
-                            <stop offset="40%" stop-color="#d0d8ff"/>
-                            <stop offset="100%" stop-color="#8899cc"/>
+                            <stop offset="0%" stop-color="#f0f0ff"/><stop offset="40%" stop-color="#d0d8ff"/><stop offset="100%" stop-color="#8899cc"/>
                         </radialGradient>
                     </defs>
                     <circle cx="20" cy="20" r="16" fill="url(#moonGlowDay)" id="moonCircle"/>
@@ -195,11 +203,10 @@
                     <svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg>
                 </button>
             </div>
-            <div class="scroll-hint">листай вниз</div>
+            <div class="scroll-hint" id="scrollHint">листай вниз</div>
         </div>
     </div>
 
-    <!-- Текст (скроллится сразу после видео) -->
     <div class="text-section" id="textSection">
         <div class="message-wrapper">
             <div class="message">
@@ -224,7 +231,7 @@
     </div>
 
     <script>
-        // Счётчик
+        // Счётчик с выделенной датой
         const startDate = new Date('2026-08-02T00:00:00+02:00');
         const countdownEl = document.getElementById('countdown');
         function updateCountdown() {
@@ -235,12 +242,12 @@
                 const remain = Math.abs(diff);
                 const days = Math.floor(remain / (1000 * 60 * 60 * 24));
                 const hours = Math.floor((remain % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-                countdownEl.textContent = `через ${days} дн ${hours} ч`;
+                countdownEl.innerHTML = `через ${days} дн ${hours} ч <span class="highlight">02.08.26</span>`;
             } else {
                 const days = Math.floor(diff / (1000 * 60 * 60 * 24));
                 const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
                 const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
-                countdownEl.textContent = `${days} дн ${hours} ч ${minutes} мин`;
+                countdownEl.innerHTML = `${days} дн ${hours} ч ${minutes} мин <span class="highlight">02.08.26</span>`;
             }
         }
         updateCountdown(); setInterval(updateCountdown, 60000);
@@ -258,6 +265,18 @@
             globalHearts.appendChild(heart); setTimeout(() => heart.remove(), 20000);
         }
         setInterval(createHeart, 700); for(let i = 0; i < 5; i++) setTimeout(createHeart, i * 200);
+
+        // Падающая звезда
+        function createShootingStar() {
+            const star = document.createElement('div'); star.className = 'shooting-star';
+            star.style.top = Math.random() * 60 + '%'; star.style.left = Math.random() * 80 + 10 + '%';
+            star.style.animationDuration = (Math.random() * 1 + 1.5) + 's';
+            star.innerHTML = '<div class="tail"></div><div class="head"></div>';
+            document.body.appendChild(star);
+            setTimeout(() => star.remove(), 3000);
+        }
+        setInterval(createShootingStar, 15000);
+        setTimeout(createShootingStar, 3000);
 
         // Двойное нажатие
         let lastTap = 0;
@@ -284,11 +303,26 @@
             osc.start(audioCtx.currentTime); osc.stop(audioCtx.currentTime + 0.2);
         }
 
-        // Видео
+        // Видео + исчезающая подсказка
         const video = document.getElementById('myVideo');
         const playOverlay = document.getElementById('playOverlay');
         const playBtn = document.getElementById('playBtn');
-        playBtn.addEventListener('click', () => { playClickSound(); video.muted = false; video.play().then(() => playOverlay.classList.add('hidden')).catch(() => { video.muted = true; video.play().then(() => playOverlay.classList.add('hidden')); }); });
+        const scrollHint = document.getElementById('scrollHint');
+        
+        playBtn.addEventListener('click', () => { 
+            playClickSound(); 
+            video.muted = false; 
+            video.play().then(() => {
+                playOverlay.classList.add('hidden');
+                setTimeout(() => scrollHint.classList.add('fade-out'), 5000);
+            }).catch(() => { 
+                video.muted = true; 
+                video.play().then(() => {
+                    playOverlay.classList.add('hidden');
+                    setTimeout(() => scrollHint.classList.add('fade-out'), 5000);
+                }); 
+            }); 
+        });
 
         // Меню
         const menuBtn = document.getElementById('menuBtn'), sidePanel = document.getElementById('sidePanel'), overlay = document.getElementById('overlay');
@@ -300,7 +334,7 @@
         const observer = new IntersectionObserver((entries) => { entries.forEach(entry => { if (entry.intersectionRatio < 0.5) video.classList.add('dimmed'); else video.classList.remove('dimmed'); }); }, { threshold: [0, 0.5, 1] });
         observer.observe(videoSection);
 
-        // Луна по времени суток
+        // Луна
         function updateMoonColor() {
             const now = new Date();
             const warsawHour = parseInt(now.toLocaleString('en-US', { timeZone: 'Europe/Warsaw', hour: '2-digit', hour12: false }));
@@ -315,8 +349,7 @@
         if (window.DeviceOrientationEvent) {
             window.addEventListener('deviceorientation', function(e) {
                 if (e.gamma !== null && e.beta !== null) {
-                    const x = Math.max(-8, Math.min(8, e.gamma / 5)), y = Math.max(-8, Math.min(8, (e.beta - 45) / 5));
-                    moonEl.style.transform = `translate(${x}px, ${y}px)`;
+                    moonEl.style.transform = `translate(${Math.max(-8,Math.min(8,e.gamma/5))}px,${Math.max(-8,Math.min(8,(e.beta-45)/5))}px)`;
                 }
             });
         }
@@ -338,7 +371,7 @@
         }
         checkRain();
 
-        // Рисование пальцем
+        // Рисование
         const canvas = document.getElementById('drawCanvas'), ctx = canvas.getContext('2d');
         let drawing = false, drawTimeout;
         function resizeCanvas() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
@@ -352,6 +385,11 @@
             }
         }, { passive: false });
         document.addEventListener('touchend', () => { drawing = false; });
+
+        // Меняющийся заголовок вкладки
+        const titles = ['Для Карины 💕', 'Открой меня...', 'Для Карины 💕', 'Я скучаю...'];
+        let titleIdx = 0;
+        setInterval(() => { document.title = titles[titleIdx]; titleIdx = (titleIdx + 1) % titles.length; }, 4000);
     </script>
 </body>
 </html>
