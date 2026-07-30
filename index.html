@@ -6,17 +6,20 @@
     <title>Для Карины</title>
     <style>
         *{margin:0;padding:0;box-sizing:border-box}
-        body{background:#000;overflow-x:hidden;user-select:none;-webkit-user-select:none;font-family:'Arial',sans-serif}
+        body{background:#000;overflow-x:hidden;user-select:none;-webkit-user-select:none;font-family:'Arial',sans-serif;touch-action:manipulation}
 
         .section{width:100vw;height:100vh;display:flex;justify-content:center;align-items:center;position:relative;overflow:hidden;flex-shrink:0}
         
         .video-wrapper{position:relative;width:100%;height:100%;display:flex;justify-content:center;align-items:center}
-        .video-wrapper::after{content:'';position:absolute;bottom:0;left:0;width:100%;height:35%;background:linear-gradient(to top,rgba(0,0,0,0.6) 0%,transparent 100%);pointer-events:none;z-index:2}
         video{width:100%;height:100%;object-fit:contain;position:relative;z-index:1;transition:filter 1.2s ease}
         video.dimmed{filter:brightness(0.25) saturate(0.7)}
 
+        /* Рисование пальцем */
+        canvas{position:fixed;top:0;left:0;width:100%;height:100%;z-index:60;pointer-events:none}
+        .drawing-mode canvas{pointer-events:auto}
+
         .global-hearts{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:50}
-        .floating-heart{position:absolute;animation:floatUp linear infinite;opacity:0}
+        .floating-heart{position:absolute;animation:floatUp linear infinite;opacity:0;filter:drop-shadow(0 0 6px rgba(255,153,187,0.4))}
         @keyframes floatUp{
             0%{transform:translateY(105vh) scale(0.4) rotate(0deg);opacity:0}
             10%{opacity:0.35}
@@ -24,8 +27,25 @@
             100%{transform:translateY(-10vh) scale(1.1) rotate(340deg);opacity:0}
         }
 
-        .moon{position:absolute;top:16px;right:18px;z-index:3;pointer-events:none;animation:fadeInName 2s ease}
-        .moon svg{width:32px;height:32px;filter:drop-shadow(0 0 10px rgba(255,220,180,0.6)) drop-shadow(0 0 20px rgba(255,200,150,0.3))}
+        .tap-heart{position:fixed;pointer-events:none;z-index:100;font-size:40px;animation:tapHeartAnim 1s ease forwards;filter:drop-shadow(0 0 8px rgba(255,153,187,0.5))}
+        @keyframes tapHeartAnim{
+            0%{opacity:1;transform:translate(-50%,-50%) scale(0.3)}
+            30%{opacity:1;transform:translate(-50%,-50%) scale(1.3)}
+            100%{opacity:0;transform:translate(-50%,-50%) scale(1) translateY(-80px)}
+        }
+
+        /* Капли дождя */
+        .raindrop{position:fixed;pointer-events:none;z-index:55;animation:rainFall linear forwards;opacity:0.5}
+        @keyframes rainFall{
+            0%{transform:translateY(-10vh);opacity:0}
+            10%{opacity:0.5}
+            100%{transform:translateY(110vh);opacity:0}
+        }
+
+        .moon{position:absolute;top:16px;right:18px;z-index:3;pointer-events:none;animation:fadeInName 2s ease;transition:transform 0.1s ease}
+        .moon svg{width:32px;height:32px;transition:filter 3s ease}
+        .moon.day svg{filter:drop-shadow(0 0 10px rgba(255,240,200,0.8)) drop-shadow(0 0 20px rgba(255,220,150,0.5))}
+        .moon.night svg{filter:drop-shadow(0 0 10px rgba(200,210,255,0.7)) drop-shadow(0 0 20px rgba(180,190,240,0.4))}
         @media screen and (max-width:480px){
             .moon{top:11px;right:14px}
             .moon svg{width:26px;height:26px}
@@ -84,6 +104,8 @@
             .message-wrapper .message-reflect{font-size:15px;margin-top:-8px}
         }
         .text-section .love-word{font-family:'Great Vibes','Pacifico','Brush Script MT',cursive;font-size:42px;color:#ff99bb;text-shadow:0 0 20px rgba(255,153,187,0.4);animation:fadeInUp 2s ease;text-align:center}
+        .random-phrase{color:#b8a99a;font-size:12px;text-align:center;font-family:'Georgia','Times New Roman',serif;font-style:italic;animation:fadeIn 4s ease;padding:0 20px}
+        
         @keyframes fadeInUp{from{opacity:0;transform:translateY(30px)}to{opacity:1;transform:translateY(0)}}
         @keyframes fadeIn{from{opacity:0;transform:translateY(15px)}to{opacity:1;transform:translateY(0)}}
 
@@ -99,8 +121,8 @@
 </head>
 <body>
 
+    <canvas id="drawCanvas"></canvas>
     <div class="global-hearts" id="globalHearts"></div>
-
     <div class="overlay" id="overlay"></div>
 
     <div class="side-panel" id="sidePanel">
@@ -146,16 +168,21 @@
 
     <div class="section" id="videoSection">
         <div class="video-wrapper">
-            <div class="moon">
+            <div class="moon" id="moon">
                 <svg viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg">
                     <defs>
-                        <radialGradient id="moonGlow" cx="60%" cy="30%" r="60%">
+                        <radialGradient id="moonGlowDay" cx="60%" cy="30%" r="60%">
                             <stop offset="0%" stop-color="#fff5e6"/>
                             <stop offset="40%" stop-color="#ffe0b0"/>
                             <stop offset="100%" stop-color="#cc9966"/>
                         </radialGradient>
+                        <radialGradient id="moonGlowNight" cx="60%" cy="30%" r="60%">
+                            <stop offset="0%" stop-color="#f0f0ff"/>
+                            <stop offset="40%" stop-color="#d0d8ff"/>
+                            <stop offset="100%" stop-color="#8899cc"/>
+                        </radialGradient>
                     </defs>
-                    <circle cx="20" cy="20" r="16" fill="url(#moonGlow)"/>
+                    <circle cx="20" cy="20" r="16" fill="url(#moonGlowDay)" id="moonCircle"/>
                     <circle cx="26" cy="14" r="13" fill="#0a0508"/>
                 </svg>
             </div>
@@ -205,17 +232,17 @@
             </div>
         </div>
         <div class="love-word">Люблю.</div>
+        <div class="random-phrase" id="randomPhrase"></div>
     </div>
 
     <script>
+        // Счётчик
         const startDate = new Date('2026-08-02T00:00:00+02:00');
         const countdownEl = document.getElementById('countdown');
-        
         function updateCountdown() {
             const now = new Date();
             const warsawTime = new Date(now.toLocaleString('en-US', { timeZone: 'Europe/Warsaw' }));
             const diff = warsawTime - startDate;
-            
             if (diff < 0) {
                 const remain = Math.abs(diff);
                 const days = Math.floor(remain / (1000 * 60 * 60 * 24));
@@ -228,12 +255,15 @@
                 countdownEl.textContent = `${days} дн ${hours} ч ${minutes} мин`;
             }
         }
-        
         updateCountdown();
         setInterval(updateCountdown, 60000);
 
+        // Случайная фраза
+        const phrases = ['ты пахнешь счастьем','твой смех — мой любимый звук','даже тишина с тобой — музыка','ты снишься мне чаще, чем я сплю','с тобой мир цветной','моё сердце бьётся в ритме твоего имени','ты — моя любимая случайность','без тебя даже звёзды тусклее','ты делаешь обычный день — праздником','смотрю на тебя и забываю дышать'];
+        document.getElementById('randomPhrase').textContent = phrases[Math.floor(Math.random() * phrases.length)];
+
+        // Сердечки с тенью
         const globalHearts = document.getElementById('globalHearts');
-        
         function createHeart() {
             const heart = document.createElement('span');
             heart.className = 'floating-heart';
@@ -242,62 +272,139 @@
             heart.style.fontSize = (Math.random() * 18 + 12) + 'px';
             heart.style.animationDuration = (Math.random() * 10 + 10) + 's';
             globalHearts.appendChild(heart);
-            
-            setTimeout(() => {
-                heart.remove();
-            }, 20000);
+            setTimeout(() => heart.remove(), 20000);
         }
-        
         setInterval(createHeart, 700);
-        for(let i = 0; i < 5; i++) {
-            setTimeout(createHeart, i * 200);
+        for(let i = 0; i < 5; i++) setTimeout(createHeart, i * 200);
+
+        // Двойное нажатие — сердечко
+        let lastTap = 0;
+        document.addEventListener('click', function(e) {
+            const now = Date.now();
+            if (now - lastTap < 300) {
+                const heart = document.createElement('span');
+                heart.className = 'tap-heart';
+                heart.textContent = '💕';
+                heart.style.left = e.clientX + 'px';
+                heart.style.top = e.clientY + 'px';
+                document.body.appendChild(heart);
+                setTimeout(() => heart.remove(), 1000);
+                if (navigator.vibrate) navigator.vibrate(30);
+            }
+            lastTap = now;
+        });
+
+        // Звук
+        const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        function playClickSound() {
+            const osc = audioCtx.createOscillator();
+            const gain = audioCtx.createGain();
+            osc.connect(gain); gain.connect(audioCtx.destination);
+            osc.frequency.setValueAtTime(1200, audioCtx.currentTime);
+            osc.frequency.exponentialRampToValueAtTime(600, audioCtx.currentTime + 0.15);
+            gain.gain.setValueAtTime(0.15, audioCtx.currentTime);
+            gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.2);
+            osc.start(audioCtx.currentTime); osc.stop(audioCtx.currentTime + 0.2);
         }
 
+        // Видео и кнопка
         const video = document.getElementById('myVideo');
         const playOverlay = document.getElementById('playOverlay');
         const playBtn = document.getElementById('playBtn');
-
         playBtn.addEventListener('click', () => {
+            playClickSound();
             video.muted = false;
-            video.play().then(() => {
-                playOverlay.classList.add('hidden');
-            }).catch(() => {
-                video.muted = true;
-                video.play().then(() => {
-                    playOverlay.classList.add('hidden');
-                });
-            });
+            video.play().then(() => playOverlay.classList.add('hidden')).catch(() => { video.muted = true; video.play().then(() => playOverlay.classList.add('hidden')); });
         });
 
+        // Меню
         const menuBtn = document.getElementById('menuBtn');
         const sidePanel = document.getElementById('sidePanel');
         const overlay = document.getElementById('overlay');
+        menuBtn.addEventListener('click', () => { playClickSound(); menuBtn.classList.toggle('open'); sidePanel.classList.toggle('open'); overlay.classList.toggle('show'); });
+        overlay.addEventListener('click', () => { menuBtn.classList.remove('open'); sidePanel.classList.remove('open'); overlay.classList.remove('show'); });
 
-        menuBtn.addEventListener('click', () => {
-            menuBtn.classList.toggle('open');
-            sidePanel.classList.toggle('open');
-            overlay.classList.toggle('show');
-        });
-
-        overlay.addEventListener('click', () => {
-            menuBtn.classList.remove('open');
-            sidePanel.classList.remove('open');
-            overlay.classList.remove('show');
-        });
-
+        // Затемнение видео
         const videoSection = document.getElementById('videoSection');
-        
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.intersectionRatio < 0.5) {
-                    video.classList.add('dimmed');
-                } else {
-                    video.classList.remove('dimmed');
+        const observer = new IntersectionObserver((entries) => { entries.forEach(entry => { if (entry.intersectionRatio < 0.5) video.classList.add('dimmed'); else video.classList.remove('dimmed'); }); }, { threshold: [0, 0.5, 1] });
+        observer.observe(videoSection);
+
+        // Цвет луны по времени суток (Варшава)
+        function updateMoonColor() {
+            const now = new Date();
+            const warsawHour = parseInt(now.toLocaleString('en-US', { timeZone: 'Europe/Warsaw', hour: '2-digit', hour12: false }));
+            const moon = document.getElementById('moon');
+            const moonCircle = document.getElementById('moonCircle');
+            if (warsawHour >= 6 && warsawHour < 20) { moon.classList.add('day'); moon.classList.remove('night'); moonCircle.setAttribute('fill', 'url(#moonGlowDay)'); }
+            else { moon.classList.add('night'); moon.classList.remove('day'); moonCircle.setAttribute('fill', 'url(#moonGlowNight)'); }
+        }
+        updateMoonColor();
+        setInterval(updateMoonColor, 60000);
+
+        // Покачивание луны при наклоне телефона
+        const moonEl = document.getElementById('moon');
+        if (window.DeviceOrientationEvent) {
+            window.addEventListener('deviceorientation', function(e) {
+                if (e.gamma !== null && e.beta !== null) {
+                    const x = Math.max(-8, Math.min(8, e.gamma / 5));
+                    const y = Math.max(-8, Math.min(8, (e.beta - 45) / 5));
+                    moonEl.style.transform = `translate(${x}px, ${y}px)`;
                 }
             });
-        }, { threshold: [0, 0.5, 1] });
+        }
+
+        // Погода — дождь в Варшаве
+        async function checkRain() {
+            try {
+                const resp = await fetch('https://api.open-meteo.com/v1/forecast?latitude=52.2297&longitude=21.0122&current=rain');
+                const data = await resp.json();
+                if (data.current && data.current.rain > 0) startRain();
+            } catch(e) {}
+        }
+        function startRain() {
+            setInterval(() => {
+                const drop = document.createElement('div');
+                drop.className = 'raindrop';
+                drop.textContent = '💧';
+                drop.style.left = Math.random() * 100 + '%';
+                drop.style.fontSize = (Math.random() * 10 + 8) + 'px';
+                drop.style.animationDuration = (Math.random() * 2 + 2) + 's';
+                document.body.appendChild(drop);
+                setTimeout(() => drop.remove(), 4000);
+            }, 400);
+        }
+        checkRain();
+
+        // Рисование пальцем
+        const canvas = document.getElementById('drawCanvas');
+        const ctx = canvas.getContext('2d');
+        let drawing = false;
+        let drawTimeout;
         
-        observer.observe(videoSection);
+        function resizeCanvas() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
+        resizeCanvas();
+        window.addEventListener('resize', resizeCanvas);
+
+        document.addEventListener('touchstart', function(e) {
+            if (e.touches.length === 3) { drawing = true; e.preventDefault(); }
+        }, { passive: false });
+        
+        document.addEventListener('touchmove', function(e) {
+            if (drawing) {
+                e.preventDefault();
+                const touch = e.touches[0];
+                ctx.beginPath();
+                ctx.arc(touch.clientX, touch.clientY, 4, 0, Math.PI * 2);
+                ctx.fillStyle = 'rgba(255,153,187,0.5)';
+                ctx.fill();
+                ctx.shadowColor = 'rgba(255,153,187,0.3)';
+                ctx.shadowBlur = 6;
+                clearTimeout(drawTimeout);
+                drawTimeout = setTimeout(() => { ctx.clearRect(0, 0, canvas.width, canvas.height); }, 2000);
+            }
+        }, { passive: false });
+        
+        document.addEventListener('touchend', function() { drawing = false; });
     </script>
 </body>
 </html>
