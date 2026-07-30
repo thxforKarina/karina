@@ -112,7 +112,7 @@
             <div class="moon" id="moon"><svg viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg"><defs><radialGradient id="moonGlowDay" cx="60%" cy="30%" r="60%"><stop offset="0%" stop-color="#fff5e6"/><stop offset="40%" stop-color="#ffe0b0"/><stop offset="100%" stop-color="#cc9966"/></radialGradient><radialGradient id="moonGlowNight" cx="60%" cy="30%" r="60%"><stop offset="0%" stop-color="#f0f0ff"/><stop offset="40%" stop-color="#d0d8ff"/><stop offset="100%" stop-color="#8899cc"/></radialGradient></defs><circle cx="20" cy="20" r="16" fill="url(#moonGlowDay)" id="moonCircle"/><circle cx="26" cy="14" r="13" fill="#0a0508"/></svg><span class="moon-emoji" id="moonEmoji">🌙</span><div class="moon-message" id="moonMessage">ты самая красивая</div></div>
             <div class="top-center"><span class="happiness">Сайт счастья</span><span class="countdown" id="countdown">загрузка...</span><span class="random-phrase-top" id="randomPhraseTop"></span></div>
             <button class="menu-btn" id="menuBtn" aria-label="Меню"><span></span><span></span><span></span></button>
-            <video id="myVideo" playsinline loop preload="auto"><source src="https://github.com/thxforKarina/karina/releases/download/v3.0/Karina.mp4" type="video/mp4"></video>
+            <video id="myVideo" playsinline loop preload="none"><source src="https://github.com/thxforKarina/karina/releases/download/v3.0/Karina.mp4" type="video/mp4"></video>
             <div class="play-overlay" id="playOverlay"><button class="play-btn" id="playBtn"><svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg></button></div>
             <div class="scroll-hint" id="scrollHint">листай вниз</div>
         </div>
@@ -123,46 +123,39 @@
         <div class="puzzle-heart"><span class="puzzle-piece">❤️</span><span class="puzzle-piece">🧩</span><span class="puzzle-piece">❤️</span><span class="puzzle-piece">💕</span></div>
     </div>
     <script>
-        const startDate = new Date('2026-08-02T00:00:00+02:00');
-        const countdownEl = document.getElementById('countdown');
-        function updateCountdown() {
-            const now = new Date();
-            const warsawTime = new Date(now.toLocaleString('en-US', { timeZone: 'Europe/Warsaw' }));
-            const diff = warsawTime - startDate;
-            if (diff < 0) { const r=Math.abs(diff); const d=Math.floor(r/86400000); const h=Math.floor((r%86400000)/3600000); countdownEl.innerHTML=`через ${d} дн ${h} ч <span class="highlight">02.08.26</span>`; }
-            else { const d=Math.floor(diff/86400000); const h=Math.floor((diff%86400000)/3600000); const m=Math.floor((diff%3600000)/60000); countdownEl.innerHTML=`${d} дн ${h} ч ${m} мин <span class="highlight">02.08.26</span>`; }
-        }
-        updateCountdown();setInterval(updateCountdown,60000);
+        const startDate=new Date('2026-08-02T00:00:00+02:00'),countdownEl=document.getElementById('countdown');
+        function updateCountdown(){const n=new Date(),w=new Date(n.toLocaleString('en-US',{timeZone:'Europe/Warsaw'})),d=w-startDate;if(d<0){const r=Math.abs(d),D=Math.floor(r/864e5),H=Math.floor((r%864e5)/36e5);countdownEl.innerHTML=`через ${D} дн ${H} ч <span class="highlight">02.08.26</span>`}else{const D=Math.floor(d/864e5),H=Math.floor((d%864e5)/36e5),M=Math.floor((d%36e5)/6e4);countdownEl.innerHTML=`${D} дн ${H} ч ${M} мин <span class="highlight">02.08.26</span>`}}
+        updateCountdown();setInterval(updateCountdown,6e4);
 
         const phrases=['ты пахнешь счастьем','твой смех — мой любимый звук','даже тишина с тобой — музыка','ты снишься мне чаще, чем я сплю','с тобой мир цветной','моё сердце бьётся в ритме твоего имени','ты — моя любимая случайность','без тебя даже звёзды тусклее','ты делаешь обычный день — праздником','смотрю на тебя и забываю дышать'];
         const phraseEl=document.getElementById('randomPhraseTop');let pi=Math.floor(Math.random()*phrases.length);phraseEl.textContent=phrases[pi];
-        setInterval(()=>{phraseEl.style.opacity='0';setTimeout(()=>{pi=(pi+1)%phrases.length;phraseEl.textContent=phrases[pi];phraseEl.style.opacity='1';},500);},7000);
+        setInterval(()=>{phraseEl.style.opacity='0';setTimeout(()=>{pi=(pi+1)%phrases.length;phraseEl.textContent=phrases[pi];phraseEl.style.opacity='1';},500)},7e3);
 
         const cardPhrases=['люблю тебя','ты моё всё','скучаю','ты прекрасна','моя нежная','самая родная','будь моей','ты — чудо','обожаю тебя','моя девочка'];let cardOpened=false;
-        function openPostcard(){playRustleSound();const c=document.getElementById('postcard');if(!cardOpened){c.querySelector('.hidden-message').textContent=cardPhrases[Math.floor(Math.random()*cardPhrases.length)];cardOpened=true;}c.classList.toggle('opened');if(!c.classList.contains('opened'))cardOpened=false;}
+        function openPostcard(){playRustleSound();const c=document.getElementById('postcard');if(!cardOpened){c.querySelector('.hidden-message').textContent=cardPhrases[Math.floor(Math.random()*cardPhrases.length)];cardOpened=true}c.classList.toggle('opened');if(!c.classList.contains('opened'))cardOpened=false}
 
         document.getElementById('extraPhrase').textContent=['ты моё солнце','с тобой даже понедельник — выходной','думаю о тебе чаще, чем дышу','ты — лучшее, что со мной случилось','твой голос — мой покой','обожаю твои глаза'][Math.floor(Math.random()*6)];
 
         const gh=document.getElementById('globalHearts');
-        function createHeart(){const h=document.createElement('span');h.className='floating-heart';h.textContent='💕';h.style.left=Math.random()*100+'%';h.style.fontSize=(Math.random()*18+12)+'px';h.style.animationDuration=(Math.random()*10+10)+'s';gh.appendChild(h);setTimeout(()=>h.remove(),20000);}
+        function createHeart(){const h=document.createElement('span');h.className='floating-heart';h.textContent='💕';h.style.left=Math.random()*100+'%';h.style.fontSize=(Math.random()*18+12)+'px';h.style.animationDuration=(Math.random()*10+10)+'s';gh.appendChild(h);setTimeout(()=>h.remove(),2e4)}
         setInterval(createHeart,700);for(let i=0;i<5;i++)setTimeout(createHeart,i*200);
 
-        function createShootingStar(){const s=document.createElement('div');s.className='shooting-star';s.style.top=Math.random()*60+'%';s.style.left=Math.random()*60+5+'%';s.style.animationDuration=(Math.random()*1+1.5)+'s';s.innerHTML='<div class="tail"></div><div class="head"></div>';document.body.appendChild(s);setTimeout(()=>s.remove(),3000);}
-        setInterval(createShootingStar,15000);setTimeout(createShootingStar,3000);
+        function createShootingStar(){const s=document.createElement('div');s.className='shooting-star';s.style.top=Math.random()*60+'%';s.style.left=Math.random()*60+5+'%';s.style.animationDuration=(Math.random()*1+1.5)+'s';s.innerHTML='<div class="tail"></div><div class="head"></div>';document.body.appendChild(s);setTimeout(()=>s.remove(),3e3)}
+        setInterval(createShootingStar,15e3);setTimeout(createShootingStar,3e3);
 
-        let lt=0;document.addEventListener('click',function(e){const n=Date.now();if(n-lt<300){const h=document.createElement('span');h.className='tap-heart';h.textContent='💕';h.style.left=e.clientX+'px';h.style.top=e.clientY+'px';document.body.appendChild(h);setTimeout(()=>h.remove(),1000);if(navigator.vibrate)navigator.vibrate(30);}lt=n;});
+        let lt=0;document.addEventListener('click',function(e){const n=Date.now();if(n-lt<300){const h=document.createElement('span');h.className='tap-heart';h.textContent='💕';h.style.left=e.clientX+'px';h.style.top=e.clientY+'px';document.body.appendChild(h);setTimeout(()=>h.remove(),1e3);if(navigator.vibrate)navigator.vibrate(30)}lt=n});
 
         const ac=new(window.AudioContext||window.webkitAudioContext)();
-        function playClickSound(){const o=ac.createOscillator(),g=ac.createGain();o.connect(g);g.connect(ac.destination);o.frequency.setValueAtTime(1200,ac.currentTime);o.frequency.exponentialRampToValueAtTime(600,ac.currentTime+0.15);g.gain.setValueAtTime(0.15,ac.currentTime);g.gain.exponentialRampToValueAtTime(0.001,ac.currentTime+0.2);o.start(ac.currentTime);o.stop(ac.currentTime+0.2);}
-        function playRustleSound(){const b=ac.createBuffer(1,ac.sampleRate*0.3,ac.sampleRate);const d=b.getChannelData(0);for(let i=0;i<d.length;i++)d[i]=(Math.random()*2-1)*0.03;const s=ac.createBufferSource();s.buffer=b;const g=ac.createGain();s.connect(g);g.connect(ac.destination);g.gain.setValueAtTime(0.1,ac.currentTime);g.gain.exponentialRampToValueAtTime(0.001,ac.currentTime+0.3);s.start(ac.currentTime);s.stop(ac.currentTime+0.3);}
+        function playClickSound(){const o=ac.createOscillator(),g=ac.createGain();o.connect(g);g.connect(ac.destination);o.frequency.setValueAtTime(1200,ac.currentTime);o.frequency.exponentialRampToValueAtTime(600,ac.currentTime+0.15);g.gain.setValueAtTime(0.15,ac.currentTime);g.gain.exponentialRampToValueAtTime(0.001,ac.currentTime+0.2);o.start(ac.currentTime);o.stop(ac.currentTime+0.2)}
+        function playRustleSound(){const b=ac.createBuffer(1,ac.sampleRate*0.3,ac.sampleRate),d=b.getChannelData(0);for(let i=0;i<d.length;i++)d[i]=(Math.random()*2-1)*0.03;const s=ac.createBufferSource();s.buffer=b;const g=ac.createGain();s.connect(g);g.connect(ac.destination);g.gain.setValueAtTime(0.1,ac.currentTime);g.gain.exponentialRampToValueAtTime(0.001,ac.currentTime+0.3);s.start(ac.currentTime);s.stop(ac.currentTime+0.3)}
 
         const v=document.getElementById('myVideo'),po=document.getElementById('playOverlay'),pb=document.getElementById('playBtn'),sh=document.getElementById('scrollHint');
-        pb.addEventListener('click',()=>{playClickSound();v.muted=false;v.play().then(()=>{po.classList.add('hidden');setTimeout(()=>sh.classList.add('fade-out'),5000);}).catch(()=>{v.muted=true;v.play().then(()=>{po.classList.add('hidden');setTimeout(()=>sh.classList.add('fade-out'),5000);});});});
+        pb.addEventListener('click',()=>{playClickSound();v.muted=false;v.play().then(()=>{po.classList.add('hidden');setTimeout(()=>sh.classList.add('fade-out'),5e3)}).catch(()=>{v.muted=true;v.play().then(()=>{po.classList.add('hidden');setTimeout(()=>sh.classList.add('fade-out'),5e3)})})});
 
         const mb=document.getElementById('menuBtn'),sp=document.getElementById('sidePanel'),ov=document.getElementById('overlay');
-        mb.addEventListener('click',()=>{playClickSound();mb.classList.toggle('open');sp.classList.toggle('open');ov.classList.toggle('show');});
-        ov.addEventListener('click',()=>{mb.classList.remove('open');sp.classList.remove('open');ov.classList.remove('show');});
+        mb.addEventListener('click',()=>{playClickSound();mb.classList.toggle('open');sp.classList.toggle('open');ov.classList.toggle('show')});
+        ov.addEventListener('click',()=>{mb.classList.remove('open');sp.classList.remove('open');ov.classList.remove('show')});
 
-        const vs=document.getElementById('videoSection');new IntersectionObserver((e)=>{e.forEach(e=>{if(e.intersectionRatio<0.5)v.classList.add('dimmed');else v.classList.remove('dimmed');});},{threshold:[0,0.5,1]}).observe(vs);
+        const vs=document.getElementById('videoSection');new IntersectionObserver(e=>{e.forEach(e=>{if(e.intersectionRatio<0.5)v.classList.add('dimmed');else v.classList.remove('dimmed')})},{threshold:[0,0.5,1]}).observe(vs);
 
-        function updateMoonColor(){const n=new Date();const wh=parseInt(n.toLocaleString('en-US',{timeZone:'Europe/Warsaw',hour:'2-digit',hour12:false}));const m=document.getElementById('moon'),mc=document.getElementById('moonCircle'),me=document.getElementById('moonEmoji');if(wh>=6&&wh<12){m.classList.add('day');m.classList.remove('night');mc.setAttribute('fill','url(#moonGlowDay)');me
+        function updateMoonColor(){const n=new Date(),wh=parseInt(n.toLocaleString('en-US',{timeZone:'Europe/Warsaw',hour:'2-digit',hour12:false})),m=document.getElementById('moon'),mc=document.getElementById('moonCircle'),me=document.getElementById('moonEmoji');if(wh>=6&&wh<12){m.classList.add('day');m.classList.remove('night');mc.setAttribute('fill','url(#moonGlowDay)');me.textContent='☀️'}else if(wh>=12&&wh<20){m.classList.add('day');m.classList.remove('night');mc.setAttribute('fill','url(#moonGlowDay)');me.textContent='😊'}else{m.classList.add('night');m.classList.remove
