@@ -11,7 +11,7 @@
         .section{width:100vw;height:100vh;display:flex;justify-content:center;align-items:center;position:relative;overflow:hidden;flex-shrink:0}
         
         .video-wrapper{position:relative;width:100%;height:100%;display:flex;justify-content:center;align-items:center}
-        .video-wrapper::after{content:'';position:absolute;inset:-20px;background:transparent;box-shadow:inset 0 0 80px 30px rgba(255,153,187,0.25),0 0 60px 20px rgba(255,153,187,0.2);pointer-events:none;z-index:2}
+        .video-wrapper::after{content:'';position:absolute;bottom:0;left:0;width:100%;height:35%;background:linear-gradient(to top,rgba(0,0,0,0.6) 0%,transparent 100%);pointer-events:none;z-index:2}
         video{width:100%;height:100%;object-fit:contain;position:relative;z-index:1;transition:filter 1.2s ease}
         video.dimmed{filter:brightness(0.25) saturate(0.7)}
 
