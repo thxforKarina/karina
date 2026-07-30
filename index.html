@@ -11,16 +11,6 @@
         video{width:100%;height:100%;object-fit:contain;position:relative;z-index:1;transition:filter 0.8s ease}
         video.dimmed{filter:brightness(0.3)}
 
-        .global-hearts{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:50}
-
-        .cdg-heart{position:absolute;animation:floatUpCDG linear infinite;opacity:0}
-        @keyframes floatUpCDG{
-            0%{transform:translateY(105vh) scale(0.3) rotate(0deg);opacity:0}
-            8%{opacity:0.45}
-            85%{opacity:0.4}
-            100%{transform:translateY(-10vh) scale(1.1) rotate(340deg);opacity:0}
-        }
-
         .name-overlay{position:absolute;top:16px;right:20px;color:#fff;font-size:24px;font-family:'Great Vibes','Pacifico','Brush Script MT',cursive;text-shadow:0 0 12px rgba(255,255,255,0.5),0 0 25px rgba(255,255,255,0.25);animation:fadeInName 2s ease;z-index:3;letter-spacing:1.5px;pointer-events:none}
         @media screen and (max-width:480px){
             .name-overlay{top:12px;right:16px;font-size:20px}
@@ -48,6 +38,18 @@
         .overlay{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.5);z-index:14;display:none}
         .overlay.show{display:block}
 
+        /* Кнопка СМОТРЕТЬ — всегда видна, пока не нажмут */
+        .play-overlay{position:absolute;top:0;left:0;width:100%;height:100%;display:flex;justify-content:center;align-items:center;z-index:5;background:rgba(0,0,0,0.7);transition:opacity 0.5s ease}
+        .play-overlay.hidden{opacity:0;pointer-events:none}
+        .play-btn{width:100px;height:100px;background:rgba(255,153,187,0.9);border:none;border-radius:50%;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:transform 0.3s ease,box-shadow 0.3s ease;box-shadow:0 0 30px rgba(255,153,187,0.5),0 0 60px rgba(255,153,187,0.3)}
+        .play-btn:hover{transform:scale(1.08);box-shadow:0 0 40px rgba(255,153,187,0.7),0 0 80px rgba(255,153,187,0.5)}
+        .play-btn:active{transform:scale(0.95)}
+        .play-btn svg{width:36px;height:36px;fill:#fff;margin-left:4px}
+        @media screen and (max-width:480px){
+            .play-btn{width:80px;height:80px}
+            .play-btn svg{width:28px;height:28px;margin-left:3px}
+        }
+
         .text-section{background:linear-gradient(to bottom,#000 0%,#1a0a0f 30%,#2d0f1a 60%,#1a0a0f 100%);flex-direction:column;gap:30px;padding:40px 25px;overflow-y:auto}
         .text-section .message{color:#ccc;font-size:15px;text-align:center;font-family:'Georgia','Times New Roman',serif;max-width:85%;line-height:1.8;animation:fadeIn 3s ease;font-style:italic}
         .text-section .love-word{font-family:'Great Vibes','Pacifico','Brush Script MT',cursive;font-size:42px;color:#ff99bb;text-shadow:0 0 20px rgba(255,153,187,0.4);animation:fadeInUp 2s ease;text-align:center}
@@ -62,11 +64,6 @@
         }
         @keyframes fadeInLove{from{opacity:0;transform:scale(0.9)}to{opacity:1;transform:scale(1)}}
 
-        #playButton{position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);z-index:10;padding:30px 60px;font-size:28px;background:rgba(255,255,255,0.9);border:none;border-radius:60px;cursor:pointer;font-weight:bold;letter-spacing:2px;color:#000;display:none;box-shadow:0 0 50px rgba(255,255,255,0.5)}
-        @media screen and (max-width:480px){
-            #playButton{padding:24px 44px;font-size:22px}
-        }
-        #playButton:hover{background:#fff;box-shadow:0 0 80px rgba(255,255,255,0.8)}
         .scroll-hint{position:absolute;bottom:80px;color:#ff99bb;font-size:18px;animation:softPulse 2s ease-in-out infinite;font-family:'Great Vibes','Pacifico','Brush Script MT',cursive;pointer-events:none;z-index:3;text-shadow:0 0 15px rgba(255,153,187,0.6),0 0 30px rgba(255,153,187,0.3);letter-spacing:1px}
         @media screen and (max-width:480px){
             .scroll-hint{bottom:70px;font-size:16px}
@@ -78,8 +75,6 @@
     </style>
 </head>
 <body>
-
-    <div class="global-hearts" id="globalHearts"></div>
 
     <div class="overlay" id="overlay"></div>
 
@@ -113,11 +108,18 @@
             <span></span>
         </button>
 
-        <video id="myVideo" autoplay playsinline loop preload="auto">
+        <video id="myVideo" playsinline loop preload="auto">
             <source src="https://github.com/thxforKarina/karina/releases/download/v3.0/Karina.mp4" type="video/mp4">
         </video>
+
+        <!-- Кнопка запуска -->
+        <div class="play-overlay" id="playOverlay">
+            <button class="play-btn" id="playBtn">
+                <svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg>
+            </button>
+        </div>
+
         <div class="scroll-hint">листай вниз</div>
-        <button id="playButton">▶ СМОТРЕТЬ</button>
     </div>
 
     <div class="section text-section" id="textSection">
@@ -137,38 +139,24 @@
     </div>
 
     <script>
-        // Глобальные сердечки CDG Play — точная копия оригинала
-        const globalHearts = document.getElementById('globalHearts');
-        
-        function createCDGHeart() {
-            const heart = document.createElement('div');
-            heart.className = 'cdg-heart';
-            
-            const size = Math.random() * 14 + 10;
-            heart.style.width = size + 'px';
-            heart.style.height = (size * 1.05) + 'px';
-            heart.style.left = Math.random() * 100 + '%';
-            heart.style.animationDuration = (Math.random() * 10 + 12) + 's';
-            
-            // SVG точно как оригинал CDG Play: вытянутое сердце, глаза близко к центру
-            heart.innerHTML = `<svg viewBox="0 0 50 55" xmlns="http://www.w3.org/2000/svg">
-                <path d="M25 50 C10 38 0 30 0 18 C0 8 6 2 13 2 C18 2 22 5 25 11 C28 5 32 2 37 2 C44 2 50 8 50 18 C50 30 40 38 25 50Z" fill="#e63946"/>
-                <circle cx="19" cy="20" r="3.2" fill="#111"/>
-                <circle cx="31" cy="20" r="3.2" fill="#111"/>
-            </svg>`;
-            
-            globalHearts.appendChild(heart);
-            
-            setTimeout(() => {
-                heart.remove();
-            }, 22000);
-        }
-        
-        setInterval(createCDGHeart, 900);
-        for(let i = 0; i < 4; i++) {
-            setTimeout(createCDGHeart, i * 250);
-        }
+        // Запуск видео по кнопке
+        const video = document.getElementById('myVideo');
+        const playOverlay = document.getElementById('playOverlay');
+        const playBtn = document.getElementById('playBtn');
 
+        playBtn.addEventListener('click', () => {
+            video.muted = false;
+            video.play().then(() => {
+                playOverlay.classList.add('hidden');
+            }).catch(() => {
+                video.muted = true;
+                video.play().then(() => {
+                    playOverlay.classList.add('hidden');
+                });
+            });
+        });
+
+        // Меню
         const menuBtn = document.getElementById('menuBtn');
         const sidePanel = document.getElementById('sidePanel');
         const overlay = document.getElementById('overlay');
@@ -185,7 +173,7 @@
             overlay.classList.remove('show');
         });
 
-        const video = document.getElementById('myVideo');
+        // Затемнение видео
         const videoSection = document.getElementById('videoSection');
         
         const observer = new IntersectionObserver((entries) => {
@@ -199,51 +187,6 @@
         }, { threshold: [0, 0.5, 1] });
         
         observer.observe(videoSection);
-
-        const playButton=document.getElementById('playButton');
-        function playVideoWithSound(){
-            video.muted=false;
-            video.play().then(()=>{
-                playButton.style.display='none';
-            }).catch(()=>{
-                video.muted=true;
-                video.play().then(()=>{
-                    playButton.style.display='block';
-                }).catch(()=>{
-                    playButton.style.display='block';
-                });
-            });
-        }
-        if(video.paused){
-            playVideoWithSound();
-        }else{
-            video.muted=false;
-            if(video.paused){
-                video.muted=true;
-                video.play();
-                playButton.style.display='block';
-            }
-        }
-        playButton.addEventListener('click',function(){
-            video.muted=false;
-            video.play().then(()=>{
-                playButton.style.display='none';
-            }).catch(()=>{
-                video.muted=true;
-                video.play();
-                playButton.style.display='none';
-            });
-        });
-        document.body.addEventListener('click',function(){
-            if(video.paused){
-                video.muted=false;
-                video.play().catch(()=>{
-                    video.muted=true;
-                    video.play();
-                });
-                playButton.style.display='none';
-            }
-        });
     </script>
 </body>
 </html>
